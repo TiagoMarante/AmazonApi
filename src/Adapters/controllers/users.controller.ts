@@ -41,6 +41,9 @@ export class UsersController {
   @OpenAPI({ summary: 'Update a user' })
   async updateUser(@Param('id') userId: string, @Body() userData: CreateUserDto) {
     const updateUserData: UserDto = await this.userService.updateUser(userId, userData);
+    if (updateUserData == null) {
+      return { data: updateUserData, message: 'not updated' };
+    }
     return { data: updateUserData, message: 'updated' };
   }
 

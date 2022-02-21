@@ -7,7 +7,7 @@ import { injectable } from "inversify";
 
 @injectable()
 export class UserRepository implements IUserRepository {
-    
+
     public async findAllUser(): Promise<User[]> {
 
         /**
@@ -42,7 +42,7 @@ export class UserRepository implements IUserRepository {
         */
 
 
-         let user = await prisma.user.findUnique({
+        let user = await prisma.user.findUnique({
             where: {
                 email: email
             }
@@ -81,22 +81,26 @@ export class UserRepository implements IUserRepository {
          * Update all Fields of a User
          */
 
-        let updatedUser = await prisma.user.update({
-            where: {
-                id: userId
-            },
-            data: {
-                username: userData.username,
-                email: userData.email,
-                password: userData.password,
-                cc: userData.cc,
-                nif: userData.nif,
-                photo: userData.photo,
-                permissions: userData.permissions
-            },
-        });
+        try {
+            let updatedUser = await prisma.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    username: userData.username,
+                    email: userData.email,
+                    password: userData.password,
+                    cc: userData.cc,
+                    nif: userData.nif,
+                    photo: userData.photo,
+                    permissions: userData.permissions
+                },
+            });
 
-        return updatedUser;
+            return updatedUser;
+        } catch (error) {
+            return null;
+        }
     }
 
 
