@@ -11,7 +11,7 @@ import morgan from 'morgan';
 import { useExpressServer, getMetadataArgsStorage } from 'routing-controllers';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
 import swaggerUi from 'swagger-ui-express';
-import errorMiddleware from '@middlewares/error.middleware';
+import errorMiddleware from '@/Adapters/middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
 
 class App {

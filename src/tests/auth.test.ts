@@ -1,7 +1,7 @@
 import request from 'supertest';
 import App from '@/app';
-import { AuthController } from '@controllers/auth.controller';
-import { CreateUserDto } from '@/dtos/Swagger/users.dto';
+import { AuthController } from '@/Adapters/controllers/auth.controller';
+import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
@@ -11,8 +11,13 @@ describe('Testing Auth', () => {
   describe('[POST] /signup', () => {
     it('response should have the Create userData', () => {
       const userData: CreateUserDto = {
+        username: "teste",
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        cc: '111111111',
+        nif: '999999999',
+        photo: 'https://www.google.com/',
+        permissions: ["CREATER","BOXING"]
       };
 
       const app = new App([AuthController]);
@@ -23,8 +28,13 @@ describe('Testing Auth', () => {
   describe('[POST] /login', () => {
     it('response should have the Set-Cookie header with the Authorization token', async () => {
       const userData: CreateUserDto = {
+        username: "teste1",
         email: 'lim@gmail.com',
         password: 'q1w2e3r4',
+        cc: '111111111',
+        nif: '999999999',
+        photo: 'https://www.google.com/',
+        permissions: ["CREATER","BOXING"]
       };
 
       const app = new App([AuthController]);

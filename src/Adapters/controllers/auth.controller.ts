@@ -1,11 +1,11 @@
 import { Response } from 'express';
 import { Controller, Req, Body, Post, UseBefore, HttpCode, Res } from 'routing-controllers';
-import { CreateUserDto } from '@/dtos/Swagger/users.dto';
-import { RequestWithUser } from '@/interfaces/auth.interface';
-import authMiddleware from '@middlewares/auth.middleware';
-import { validationMiddleware } from '@middlewares/validation.middleware';
-import AuthService from '@services/auth.service';
-import { UserDto } from '@/dtos/Applicattion/user.dto';
+import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
+import { RequestWithUser } from '@/ApplicationServices/interfaces/auth.interface';
+import authMiddleware from '@/Adapters/middlewares/auth.middleware';
+import { validationMiddleware } from '@/Adapters/middlewares/validation.middleware';
+import AuthService from '@/ApplicationServices/services/auth.service';
+import { UserDtoTests } from '@/ApplicationServices/dtos/Applicattion/user_test.dto';
 
 @Controller()
 export class AuthController {
@@ -16,7 +16,7 @@ export class AuthController {
   @UseBefore(validationMiddleware(CreateUserDto, 'body'))
   @HttpCode(201)
   async signUp(@Body() userData: CreateUserDto) {
-    const signUpUserData: UserDto = await this.authService.signup(userData);
+    const signUpUserData: UserDtoTests = await this.authService.signup(userData);
     return { data: signUpUserData, message: 'signup' };
   }
 
@@ -32,8 +32,8 @@ export class AuthController {
   @Post('/logout')
   @UseBefore(authMiddleware)
   async logOut(@Req() req: RequestWithUser, @Res() res: Response) {
-    const userData: UserDto = req.user;
-    const logOutUserData: UserDto = await this.authService.logout(userData);
+    const userData: UserDtoTests = req.user;
+    const logOutUserData: UserDtoTests = await this.authService.logout(userData);
 
     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
     return { data: logOutUserData, message: 'logout' };

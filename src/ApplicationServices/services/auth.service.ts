@@ -1,36 +1,35 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { CreateUserDto } from '@/dtos/Swagger/users.dto';
+import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { HttpException } from '@exceptions/HttpException';
-import IAuthService, { DataStoredInToken, TokenData } from '@/interfaces/auth.interface';
+import IAuthService, { DataStoredInToken, TokenData } from '@/ApplicationServices/interfaces/auth.interface';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
-import { UserDto } from '@/dtos/Applicattion/user.dto';
+import { UserDtoTests } from '@/ApplicationServices/dtos/Applicattion/user_test.dto';
 import { injectable } from 'inversify';
 import config from 'config';
 
 @injectable()
-class AuthService implements IAuthService{
-  
+class AuthService implements IAuthService {
   //TODO repo
   public users = userModel;
 
-  public async signup(userData: CreateUserDto): Promise<UserDto> {
+  public async signup(userData: CreateUserDto): Promise<UserDtoTests> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: UserDto = this.users.find(user => user.email === userData.email);
+    const findUser: UserDtoTests = this.users.find(user => user.email === userData.email);
     if (findUser) throw new HttpException(409, `You're email ${userData.email} already exists`);
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
-    const createUserData: UserDto = { id: this.users.length + 1, ...userData, password: hashedPassword };
+    const createUserData: UserDtoTests = { id: this.users.length + 1, ...userData, password: hashedPassword };
 
     return createUserData;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: UserDto }> {
+  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: UserDtoTests }> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: UserDto = this.users.find(user => user.email === userData.email);
+    const findUser: UserDtoTests = this.users.find(user => user.email === userData.email);
     if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
 
     const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
@@ -42,16 +41,16 @@ class AuthService implements IAuthService{
     return { cookie, findUser };
   }
 
-  public async logout(userData: UserDto): Promise<UserDto> {
+  public async logout(userData: UserDtoTests): Promise<UserDtoTests> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: UserDto = this.users.find(user => user.email === userData.email && user.password === userData.password);
+    const findUser: UserDtoTests = this.users.find(user => user.email === userData.email && user.password === userData.password);
     if (!findUser) throw new HttpException(409, "You're not user");
 
     return findUser;
   }
 
-  public createToken(user: UserDto): TokenData {
+  public createToken(user: UserDtoTests): TokenData {
     const dataStoredInToken: DataStoredInToken = { id: user.id };
     const secretKey: string = config.get('secretKey');
     const expiresIn: number = 60 * 60;

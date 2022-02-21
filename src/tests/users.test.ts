@@ -1,9 +1,9 @@
 import request from 'supertest';
 import App from '@/app';
-import { UsersController } from '@controllers/users.controller';
-import { CreateUserDto } from '@/dtos/Swagger/users.dto';
+import { UsersController } from '@/Adapters/controllers/users.controller';
+import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import userModel from '@models/users.model';
-import { UserDto } from '@/dtos/Applicattion/user.dto';
+import { UserDtoTests } from '@/ApplicationServices/dtos/Applicattion/user_test.dto';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
@@ -12,7 +12,7 @@ afterAll(async () => {
 describe('Testing Users', () => {
   describe('[GET] /users', () => {
     it('response statusCode 200 / findAll', () => {
-      const findUser: UserDto[] = userModel;
+      const findUser: UserDtoTests[] = userModel;
 
       const app = new App([UsersController]);
       return request(app.getServer()).get('/users').expect(200, { data: findUser, message: 'findAll' });
@@ -22,7 +22,7 @@ describe('Testing Users', () => {
   describe('[GET] /users/:id', () => {
     it('response statusCode 200 / findOne', () => {
       const userId = 1;
-      const findUser: UserDto = userModel.find(user => user.id === userId);
+      const findUser: UserDtoTests = userModel.find(user => user.id === userId);
 
       const app = new App([UsersController]);
       return request(app.getServer()).get(`/users/${userId}`).expect(200, { data: findUser, message: 'findOne' });
@@ -32,8 +32,13 @@ describe('Testing Users', () => {
   describe('[POST] /users', () => {
     it('response statusCode 201 / created', async () => {
       const userData: CreateUserDto = {
+        username: "user1",
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        cc: '111111111',
+        nif: '999999999',
+        photo: 'https://www.google.com/',
+        permissions: ["CREATER","BOXING"]
       };
 
       const app = new App([UsersController]);
@@ -45,8 +50,13 @@ describe('Testing Users', () => {
     it('response statusCode 200 / updated', async () => {
       const userId = 1;
       const userData: CreateUserDto = {
+        username: "username2",
         email: 'test@email.com',
         password: 'q1w2e3r4',
+        cc: '111111111',
+        nif: '999999999',
+        photo: 'https://www.google.com/',
+        permissions: ["CREATER","BOXING"]
       };
 
       const app = new App([UsersController]);
