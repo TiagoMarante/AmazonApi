@@ -1,14 +1,18 @@
 import bcrypt from 'bcrypt';
-import config from 'config';
 import jwt from 'jsonwebtoken';
 import { CreateUserDto } from '@/dtos/Swagger/users.dto';
 import { HttpException } from '@exceptions/HttpException';
-import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
+import IAuthService, { DataStoredInToken, TokenData } from '@/interfaces/auth.interface';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
 import { UserDto } from '@/dtos/Applicattion/user.dto';
+import { injectable } from 'inversify';
+import config from 'config';
 
-class AuthService {
+@injectable()
+class AuthService implements IAuthService{
+  
+  //TODO repo
   public users = userModel;
 
   public async signup(userData: CreateUserDto): Promise<UserDto> {

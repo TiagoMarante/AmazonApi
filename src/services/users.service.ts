@@ -3,10 +3,12 @@ import { CreateUserDto } from '@/dtos/Swagger/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
-import IUserServices from '@/interfaces/IUserService';
 import { UserDto } from '@/dtos/Applicattion/user.dto';
+import IUserService from '@/interfaces/user.interface';
+import { injectable } from 'inversify';
 
-class UserService implements IUserServices{
+@injectable()
+class UserService implements IUserService{
   public users = userModel;
 
   public async findAllUser(): Promise<UserDto[]> {

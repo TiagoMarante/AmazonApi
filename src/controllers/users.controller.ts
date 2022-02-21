@@ -4,10 +4,14 @@ import { CreateUserDto } from '@/dtos/Swagger/users.dto';
 import userService from '@services/users.service';
 import { validationMiddleware } from '@middlewares/validation.middleware';
 import { UserDto } from '@/dtos/Applicattion/user.dto';
+import { TYPES } from '@/../types';
+import { injector } from '@/inversify.config';
+import IUserService from '@/interfaces/user.interface';
 
 @Controller()
 export class UsersController {
-  public userService = new userService();
+  //public userService = new userService();
+  public userService = injector.get<IUserService>(TYPES.IUserService);
 
   @Get('/users')
   @OpenAPI({ summary: 'Return a list of users' })
