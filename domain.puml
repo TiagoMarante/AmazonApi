@@ -1,0 +1,28 @@
+@startuml
+
+left to right direction
+
+
+package Produto <<Rectangle>> {
+  class "<Entity> Produto"{
+  
+  }
+  
+  class "<VO> SKU"{
+  }
+  
+  class "<VO> Weight"{
+  }
+  
+  class "<VO> ASIN"{
+  }
+}
+
+
+package Produto <<Rectangle>> {
+  class "<Entity> Stock"{
+  
+  }
+}
+
+@enduml

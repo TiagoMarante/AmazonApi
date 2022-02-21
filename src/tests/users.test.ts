@@ -1,9 +1,9 @@
 import request from 'supertest';
 import App from '@/app';
 import { UsersController } from '@controllers/users.controller';
-import { CreateUserDto } from '@dtos/users.dto';
-import { User } from '@interfaces/users.interface';
+import { CreateUserDto } from '@/dtos/Swagger/users.dto';
 import userModel from '@models/users.model';
+import { UserDto } from '@/dtos/Applicattion/user.dto';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
@@ -12,7 +12,7 @@ afterAll(async () => {
 describe('Testing Users', () => {
   describe('[GET] /users', () => {
     it('response statusCode 200 / findAll', () => {
-      const findUser: User[] = userModel;
+      const findUser: UserDto[] = userModel;
 
       const app = new App([UsersController]);
       return request(app.getServer()).get('/users').expect(200, { data: findUser, message: 'findAll' });
@@ -22,7 +22,7 @@ describe('Testing Users', () => {
   describe('[GET] /users/:id', () => {
     it('response statusCode 200 / findOne', () => {
       const userId = 1;
-      const findUser: User = userModel.find(user => user.id === userId);
+      const findUser: UserDto = userModel.find(user => user.id === userId);
 
       const app = new App([UsersController]);
       return request(app.getServer()).get(`/users/${userId}`).expect(200, { data: findUser, message: 'findOne' });
