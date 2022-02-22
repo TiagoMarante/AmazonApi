@@ -2,8 +2,8 @@ import { Controller, Get } from 'routing-controllers';
 
 @Controller()
 export class IndexController {
-  @Get('/healy')
+  @Get('/healthy')
   index() {
-    return 'Healthy';
+    return { status: 'Healthy' };
   }
 }

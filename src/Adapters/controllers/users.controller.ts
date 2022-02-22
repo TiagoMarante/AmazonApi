@@ -10,7 +10,6 @@ import { onlyAdminsMiddleware } from '../middlewares/auth.middleware';
 
 @Controller()
 export class UsersController {
-  //public userService = new userService();
   public userService = injector.get<IUserService>(TYPES.IUserService);
 
   @Get('/users')

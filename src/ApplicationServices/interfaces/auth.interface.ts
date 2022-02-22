@@ -1,4 +1,3 @@
-import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { Role } from '@prisma/client';
 import { Request } from 'express';
 import { UserDto } from '../dtos/Applicattion/user.dto';
@@ -19,7 +18,6 @@ export interface RequestWithUser extends Request {
 }
 
 export default interface IAuthService {
-  signup(userData: CreateUserDto): Promise<UserDto>;
   login(userData: LoginUserDto): Promise<{ cookie: string; findUser: UserDto }>;
   logout(userData: LoginUserDto): Promise<UserDto>;
   createToken(user: UserDto): TokenData;

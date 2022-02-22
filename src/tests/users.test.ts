@@ -1,7 +1,6 @@
 import request from 'supertest';
 import App from '@/app';
 import { UsersController } from '@/Adapters/controllers/users.controller';
-import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import userModel from '@models/users.model';
 import { UserDtoTests } from '@/ApplicationServices/dtos/Applicattion/user_test.dto';
 
@@ -15,9 +14,13 @@ describe('Testing Users', () => {
       const findUser: UserDtoTests[] = userModel;
 
       const app = new App([UsersController]);
-      return request(app.getServer()).get('/users').expect(200, { data: findUser, message: 'findAll' });
+      const result = request(app.getServer()).get('/users');
+
+      return result.expect(200, { data: findUser, message: 'findAll' });
     });
   });
+
+  /*
 
   describe('[GET] /users/:id', () => {
     it('response statusCode 200 / findOne', () => {
@@ -72,4 +75,5 @@ describe('Testing Users', () => {
       return request(app.getServer()).delete(`/users/${userId}`).expect(200);
     });
   });
+  */
 });
