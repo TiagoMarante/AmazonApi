@@ -1,16 +1,15 @@
-import { UserDto } from "@/ApplicationServices/dtos/Applicattion/user.dto";
-import { User } from "@prisma/client";
+import { UserDto } from '@/ApplicationServices/dtos/Applicattion/user.dto';
+import { User } from '@prisma/client';
 
 const convertArray = (userArr: User[]) => {
-    let users: UserDto[] = [];
+  const users: UserDto[] = [];
 
-    userArr.map((elem) => {
-        const newUser = new UserDto(elem);
-        users.push(newUser);
-    });
+  userArr.map(elem => {
+    const newUser = new UserDto(elem);
+    users.push(newUser);
+  });
 
-    return users;
+  return users;
 };
-
 
 export default convertArray;

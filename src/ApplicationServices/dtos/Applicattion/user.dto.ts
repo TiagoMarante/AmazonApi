@@ -1,16 +1,16 @@
-import { Role, User } from "@prisma/client";
+import { Role, User } from '@prisma/client';
 
 export class UserDto {
-  id: String;
-  username: String;
-  email: String;
-  password: String;
-  cc: String;
-  nif: String;
-  photo: String;
-  permissions: Role[]
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  cc: string;
+  nif: string;
+  photo: string;
+  permissions: Role[];
 
-  constructor(user: User){
+  constructor(user: User) {
     this.id = user.id;
     this.username = user.username;
     this.email = user.email;
@@ -20,6 +20,4 @@ export class UserDto {
     this.photo = user.photo;
     this.permissions = user.permissions;
   }
-
-  
 }

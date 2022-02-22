@@ -2,7 +2,6 @@ import { Role } from '@prisma/client';
 import { IsArray, IsEmail, IsString } from 'class-validator';
 
 export class CreateUserDto {
-  
   @IsString()
   public username: string;
 

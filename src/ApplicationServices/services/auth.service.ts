@@ -3,33 +3,38 @@ import jwt from 'jsonwebtoken';
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import IAuthService, { DataStoredInToken, TokenData } from '@/ApplicationServices/interfaces/auth.interface';
-import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
-import { UserDtoTests } from '@/ApplicationServices/dtos/Applicattion/user_test.dto';
 import { injectable } from 'inversify';
 import config from 'config';
+import { TYPES } from '@/../types';
+import { injector } from '@/inversify.config';
+import IUserRepository from '../interfaces/user_repo.interface';
+import { UserDto } from '../dtos/Applicattion/user.dto';
+import { LoginUserDto } from '../dtos/Applicattion/user_login.dto';
 
 @injectable()
 class AuthService implements IAuthService {
   //TODO repo
-  public users = userModel;
+  public usersRepository = injector.get<IUserRepository>(TYPES.IUserRepository);
 
-  public async signup(userData: CreateUserDto): Promise<UserDtoTests> {
+  public async signup(userData: CreateUserDto): Promise<UserDto> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: UserDtoTests = this.users.find(user => user.email === userData.email);
+    const findUser: UserDto = await this.usersRepository.findUserByEmail(userData.email);
     if (findUser) throw new HttpException(409, `You're email ${userData.email} already exists`);
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
-    const createUserData: UserDtoTests = { id: this.users.length + 1, ...userData, password: hashedPassword };
+    userData.password = hashedPassword;
 
-    return createUserData;
+    const createUser: UserDto = await this.usersRepository.createUser(userData);
+
+    return createUser;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: UserDtoTests }> {
+  public async login(userData: LoginUserDto): Promise<{ cookie: string; findUser: UserDto }> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: UserDtoTests = this.users.find(user => user.email === userData.email);
+    const findUser: UserDto = await this.usersRepository.findUserByEmail(userData.email);
     if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
 
     const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
@@ -41,17 +46,17 @@ class AuthService implements IAuthService {
     return { cookie, findUser };
   }
 
-  public async logout(userData: UserDtoTests): Promise<UserDtoTests> {
+  public async logout(userData: LoginUserDto): Promise<UserDto> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: UserDtoTests = this.users.find(user => user.email === userData.email && user.password === userData.password);
+    const findUser: UserDto = await this.usersRepository.findUserByEmail(userData.email);
     if (!findUser) throw new HttpException(409, "You're not user");
 
     return findUser;
   }
 
-  public createToken(user: UserDtoTests): TokenData {
-    const dataStoredInToken: DataStoredInToken = { id: user.id };
+  public createToken(user: UserDto): TokenData {
+    const dataStoredInToken: DataStoredInToken = { id: user.id, permissions: user.permissions };
     const secretKey: string = config.get('secretKey');
     const expiresIn: number = 60 * 60;
 

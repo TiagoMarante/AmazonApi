@@ -7,7 +7,7 @@ import IUserService from './ApplicationServices/interfaces/user.interface';
 import IAuthService from './ApplicationServices/interfaces/auth.interface';
 import IUserRepository from './ApplicationServices/interfaces/user_repo.interface';
 import { UserService } from './ApplicationServices/services/users.service';
-import { UserRepository } from './Adapters/Repositories/users.repository';
+import { UserRepository } from './Adapters/repositories/users.repository';
 
 const injector = new Container();
 

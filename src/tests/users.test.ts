@@ -32,13 +32,13 @@ describe('Testing Users', () => {
   describe('[POST] /users', () => {
     it('response statusCode 201 / created', async () => {
       const userData: CreateUserDto = {
-        username: "user1",
+        username: 'user1',
         email: 'test@email.com',
         password: 'q1w2e3r4',
         cc: '111111111',
         nif: '999999999',
         photo: 'https://www.google.com/',
-        permissions: ["CREATER","BOXING"]
+        permissions: ['CREATER', 'BOXING'],
       };
 
       const app = new App([UsersController]);
@@ -50,13 +50,13 @@ describe('Testing Users', () => {
     it('response statusCode 200 / updated', async () => {
       const userId = 1;
       const userData: CreateUserDto = {
-        username: "username2",
+        username: 'username2',
         email: 'test@email.com',
         password: 'q1w2e3r4',
         cc: '111111111',
         nif: '999999999',
         photo: 'https://www.google.com/',
-        permissions: ["CREATER","BOXING"]
+        permissions: ['CREATER', 'BOXING'],
       };
 
       const app = new App([UsersController]);

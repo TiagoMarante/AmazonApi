@@ -1,9 +1,12 @@
-import { UserDtoTests } from '@/ApplicationServices/dtos/Applicattion/user_test.dto';
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
+import { Role } from '@prisma/client';
 import { Request } from 'express';
+import { UserDto } from '../dtos/Applicattion/user.dto';
+import { LoginUserDto } from '../dtos/Applicattion/user_login.dto';
 
 export interface DataStoredInToken {
-  id: number;
+  id: string;
+  permissions: Role[];
 }
 
 export interface TokenData {
@@ -12,13 +15,13 @@ export interface TokenData {
 }
 
 export interface RequestWithUser extends Request {
-  user: UserDtoTests;
+  user: LoginUserDto;
 }
 
 export default interface IAuthService {
-  signup(userData: CreateUserDto): Promise<UserDtoTests>;
-  login(userData: CreateUserDto): Promise<{ cookie: string; findUser: UserDtoTests }>;
-  logout(userData: UserDtoTests): Promise<UserDtoTests>;
-  createToken(user: UserDtoTests): TokenData;
+  signup(userData: CreateUserDto): Promise<UserDto>;
+  login(userData: LoginUserDto): Promise<{ cookie: string; findUser: UserDto }>;
+  logout(userData: LoginUserDto): Promise<UserDto>;
+  createToken(user: UserDto): TokenData;
   createCookie(tokenData: TokenData): string;
 }
