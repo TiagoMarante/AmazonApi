@@ -1,12 +1,5 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
-export const prisma_db = (test: boolean) => {
-  let prisma: PrismaClient<Prisma.PrismaClientOptions, never, Prisma.RejectOnNotFound | Prisma.RejectPerOperation>;
+const prisma = new PrismaClient();
 
-  if (test) {
-  } else {
-    prisma = new PrismaClient();
-  }
-
-  return prisma;
-};
+export default prisma;

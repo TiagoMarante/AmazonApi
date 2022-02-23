@@ -1,19 +1,18 @@
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import IUserRepository from '@/ApplicationServices/interfaces/user_repo.interface';
-import { prisma_db } from '@/utils/db';
-import { User } from '@prisma/client';
+import prisma from '@/utils/db';
+import {  User } from '@prisma/client';
 import { injectable } from 'inversify';
 
 @injectable()
 export class UserRepository implements IUserRepository {
-  public flag: boolean = JSON.parse(process.env.TEST);
 
   public async findAllUser(): Promise<User[]> {
     /**
      * Find All Users
      */
 
-    const users = await prisma_db(this.flag).user.findMany({});
+    const users = await prisma.user.findMany({});
 
     return users;
   }
@@ -23,7 +22,7 @@ export class UserRepository implements IUserRepository {
      * Find User by Id
      */
 
-    const user = await prisma_db(this.flag).user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         id: id,
       },
@@ -37,7 +36,7 @@ export class UserRepository implements IUserRepository {
      * Find User by Id
      */
 
-    const user = await prisma_db(this.flag).user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email: email,
       },
@@ -51,7 +50,7 @@ export class UserRepository implements IUserRepository {
      * Create a User, only admins can do this
      */
 
-    const user = await prisma_db(this.flag).user.create({
+    const user = await prisma.user.create({
       data: {
         username: userData.username,
         email: userData.email,
@@ -72,7 +71,7 @@ export class UserRepository implements IUserRepository {
      */
 
     try {
-      const updatedUser = await prisma_db(this.flag).user.update({
+      const updatedUser = await prisma.user.update({
         where: {
           id: userId,
         },
@@ -98,7 +97,7 @@ export class UserRepository implements IUserRepository {
      * Update all Fields of a User
      */
 
-    const deleteUser = await prisma_db(this.flag).user.delete({
+    const deleteUser = await prisma.user.delete({
       where: {
         id: userId,
       },

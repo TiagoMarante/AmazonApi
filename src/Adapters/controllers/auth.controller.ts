@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { Controller, Req, Body, Post, UseBefore, Res } from 'routing-controllers';
+import { Controller, Req, Body, Post, UseBefore, Res, Get } from 'routing-controllers';
 import IAuthService, { RequestWithUser } from '@/ApplicationServices/interfaces/auth.interface';
 import { UserDto } from '@/ApplicationServices/dtos/Applicattion/user.dto';
 import { LoginUserDto } from '@/ApplicationServices/dtos/Applicattion/user_login.dto';
@@ -21,10 +21,19 @@ export class AuthController {
     return { data: findUser, message: 'login' };
   }
 
+  @Get('/login')
+  @UseBefore(authMiddleware)
+  async loggedUser(@Req() req: RequestWithUser, @Res() res: Response) {
+    const userData: LoginUserDto = req.user;
+
+    return { data: userData, message: 'logged' };
+  }
+
   @Post('/logout')
   @UseBefore(authMiddleware)
   async logOut(@Req() req: RequestWithUser, @Res() res: Response) {
     const userData: LoginUserDto = req.user;
+    
     const logOutUserData: UserDto = await this.authService.logout(userData);
 
     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
