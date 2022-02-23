@@ -10,7 +10,7 @@ import { TYPES } from '@/../types';
 import { injector } from '@/inversify.config';
 import IUserRepository from '../interfaces/user_repo.interface';
 import { UserDto } from '../dtos/Applicattion/user.dto';
-import { LoginUserDto } from '../dtos/Applicattion/user_login.dto';
+import { LoginUserDto } from '../dtos/Swagger/user_login.dto';
 
 @injectable()
 class AuthService implements IAuthService {
@@ -58,6 +58,10 @@ class AuthService implements IAuthService {
   }
 
   public createToken(user: UserDto): TokenData {
+    /**
+     * One hour Token
+     */
+
     const dataStoredInToken: DataStoredInToken = { id: user.id, permissions: user.permissions };
     const secretKey: string = config.get('secretKey');
     const expiresIn: number = 60 * 60;

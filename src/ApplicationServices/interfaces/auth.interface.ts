@@ -1,7 +1,7 @@
 import { Role } from '@prisma/client';
 import { Request } from 'express';
 import { UserDto } from '../dtos/Applicattion/user.dto';
-import { LoginUserDto } from '../dtos/Applicattion/user_login.dto';
+import { LoginUserDto } from '../dtos/Swagger/user_login.dto';
 
 export interface DataStoredInToken {
   id: string;

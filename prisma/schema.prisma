@@ -6,25 +6,54 @@ generator client {
 }
 
 datasource db {
-  provider =                "postgresql"
-  url      =                env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
-
 
 model User {
-  id                         String @id @default(cuid())
-  username                   String? @unique
-  email                      String? @unique
-  password                   String? 
-  cc                         String?
-  nif                        String?
-  photo                      String?
-  permissions                Role[]
-
+  id          String  @id @default(cuid())
+  username    String? @unique
+  email       String? @unique
+  password    String?
+  cc          String?
+  nif         String?
+  permissions Role[]
+  img         Img?    @relation(fields: [imgId], references: [id])
+  imgId       String?
 }
 
+model Stock {
+  id           String             @id @default(cuid())
+  product      Product_Wharehouse @relation(fields: [product_WharehouseId], references: [id])
+  currentStock Int
+  neededStock  Int
 
+  product_WharehouseId String @unique
+}
 
+model Img {
+  id     String   @id @default(cuid())
+  photos String[]
+
+  User               User[]
+  Product_Wharehouse Product_Wharehouse[]
+}
+
+model Product_Wharehouse {
+  id          String  @id @default(cuid())
+  name        String? @unique
+  img         Img?    @relation(fields: [imgId], references: [id])
+  grossweight Float
+  netWeight   Float
+  width       Float
+  lenght      Float
+  hscode      String
+  price_acq   Float
+  price_aux   Float[]
+  Ean         String
+  Stock       Stock?
+  imgId       String?
+}
 
 enum Role {
   STOCK_MANAGER

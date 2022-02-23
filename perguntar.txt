@@ -1,0 +1,1 @@
+o campo do price_aux e so para conter numeros ou tambem alguma informacao dos precos auxiliares

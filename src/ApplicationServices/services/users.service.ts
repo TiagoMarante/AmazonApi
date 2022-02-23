@@ -21,7 +21,7 @@ export class UserService implements IUserService {
   public async findUserById(userId: string): Promise<UserDto> {
     const findUser: UserDto = await this.usersRepository.findUserById(userId);
     if (!findUser) throw new HttpException(409, "You're not user");
-
+    
     return findUser;
   }
 

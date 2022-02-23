@@ -1,4 +1,4 @@
-import { Controller, Param, Body, Get, Post, Put, Delete, HttpCode, UseBefore } from 'routing-controllers';
+import { Controller, Param, Body, Get, Post, Put, Delete, HttpCode, UseBefore, CookieParam } from 'routing-controllers';
 import { OpenAPI } from 'routing-controllers-openapi';
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { validationMiddleware } from '@/Adapters/middlewares/validation.middleware';
@@ -6,7 +6,8 @@ import { TYPES } from '@/../types';
 import { injector } from '@/inversify.config';
 import IUserService from '@/ApplicationServices/interfaces/user.interface';
 import { UserDto } from '@/ApplicationServices/dtos/Applicattion/user.dto';
-import { onlyAdminsMiddleware } from '../middlewares/auth.middleware';
+import { authMiddleware, onlyAdminsMiddleware } from '../middlewares/auth.middleware';
+import { tokenToId } from '@/utils/token';
 
 @Controller()
 export class UsersController {
@@ -38,23 +39,31 @@ export class UsersController {
     return { data: createUserData, message: 'created' };
   }
 
-  @Put('/users/:id')
-  @UseBefore(onlyAdminsMiddleware)
+  @Put('/users')
+  @UseBefore(authMiddleware)
   @UseBefore(validationMiddleware(CreateUserDto, 'body', true))
   @OpenAPI({ summary: 'Update a user' })
-  async updateUser(@Param('id') userId: string, @Body() userData: CreateUserDto) {
+  async updateUser(@CookieParam("Authorization") res: string, @Body() userData: CreateUserDto) {
+    const userId = tokenToId(res);
+    
     const updateUserData: UserDto = await this.userService.updateUser(userId, userData);
     if (updateUserData == null) {
       return { data: updateUserData, message: 'not updated' };
     }
     return { data: updateUserData, message: 'updated' };
+    
+    
   }
 
-  @Delete('/users/:id')
-  @UseBefore(onlyAdminsMiddleware)
+  @Delete('/users')
+  @UseBefore(authMiddleware)
   @OpenAPI({ summary: 'Delete a user' })
-  async deleteUser(@Param('id') userId: string) {
+  async deleteUser(@CookieParam("Authorization") res: string) {
+    const userId = tokenToId(res);
+
     const deleteUserData: UserDto = await this.userService.deleteUser(userId);
     return { data: deleteUserData, message: 'deleted' };
   }
 }
+
+

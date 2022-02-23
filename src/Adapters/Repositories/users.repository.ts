@@ -1,7 +1,7 @@
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import IUserRepository from '@/ApplicationServices/interfaces/user_repo.interface';
 import prisma from '@/utils/db';
-import {  User } from '@prisma/client';
+import {  Img, User } from '@prisma/client';
 import { injectable } from 'inversify';
 
 @injectable()
@@ -47,9 +47,8 @@ export class UserRepository implements IUserRepository {
 
   public async createUser(userData: CreateUserDto): Promise<User> {
     /**
-     * Create a User, only admins can do this
+     * Create a User and Img, only admins can do this
      */
-
     const user = await prisma.user.create({
       data: {
         username: userData.username,
@@ -57,10 +56,15 @@ export class UserRepository implements IUserRepository {
         password: userData.password,
         cc: userData.cc,
         nif: userData.nif,
-        photo: userData.photo,
         permissions: userData.permissions,
+        img:{
+          create:{
+            photos: userData.photo
+          }
+        }
       },
     });
+
 
     return user;
   }
@@ -81,8 +85,12 @@ export class UserRepository implements IUserRepository {
           password: userData.password,
           cc: userData.cc,
           nif: userData.nif,
-          photo: userData.photo,
           permissions: userData.permissions,
+          img:{
+            create:{
+              photos: userData.photo
+            }
+          }
         },
       });
 

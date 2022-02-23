@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { Controller, Req, Body, Post, UseBefore, Res, Get } from 'routing-controllers';
 import IAuthService, { RequestWithUser } from '@/ApplicationServices/interfaces/auth.interface';
 import { UserDto } from '@/ApplicationServices/dtos/Applicattion/user.dto';
-import { LoginUserDto } from '@/ApplicationServices/dtos/Applicattion/user_login.dto';
+import { LoginUserDto } from '@/ApplicationServices/dtos/Swagger/user_login.dto';
 import { injector } from '@/inversify.config';
 import { TYPES } from '@/../types';
 import { validationMiddleware } from '../middlewares/validation.middleware';

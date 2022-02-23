@@ -10,13 +10,15 @@ import IUserService from '@/ApplicationServices/interfaces/user.interface';
 export const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   const userService = injector.get<IUserService>(TYPES.IUserService);
 
+  let userId: string = null;
+
   try {
     const Authorization = req.cookies['Authorization'] || req.header('Authorization').split('Bearer ')[1] || null;
 
     if (Authorization) {
       const secretKey: string = config.get('secretKey');
       const verificationResponse = jwt.verify(Authorization, secretKey) as DataStoredInToken;
-      const userId = verificationResponse.id;
+      userId = verificationResponse.id;
       const findUser = await userService.findUserById(userId);
 
       if (findUser) {
@@ -31,6 +33,8 @@ export const authMiddleware = async (req: RequestWithUser, res: Response, next: 
   } catch (error) {
     next(new HttpException(404, 'Authentication token missing'));
   }
+
+  return userId;
 };
 
 export const onlyAdminsMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {

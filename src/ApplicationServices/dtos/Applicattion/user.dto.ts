@@ -7,8 +7,8 @@ export class UserDto {
   password: string;
   cc: string;
   nif: string;
-  photo: string;
-  permissions: Role[];
+  imgId: string;
+  //permissions: Role[];
 
   constructor(user: User) {
     this.id = user.id;
@@ -17,7 +17,7 @@ export class UserDto {
     this.password = user.password;
     this.cc = user.cc;
     this.nif = user.nif;
-    this.photo = user.photo;
-    this.permissions = user.permissions;
+    this.imgId = user.imgId;
+    //this.permissions = user.permissions;
   }
 }
