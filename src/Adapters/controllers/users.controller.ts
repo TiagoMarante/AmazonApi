@@ -4,10 +4,10 @@ import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { validationMiddleware } from '@/Adapters/middlewares/validation.middleware';
 import { TYPES } from '@/../types';
 import { injector } from '@/inversify.config';
-import IUserService from '@/ApplicationServices/interfaces/user.interface';
 import { UserDto } from '@/ApplicationServices/dtos/Applicattion/user.dto';
 import { authMiddleware, onlyAdminsMiddleware } from '../middlewares/auth.middleware';
 import { tokenToId } from '@/utils/token';
+import IUserService from '@/ApplicationServices/interfaces/user/user_serv.interface';
 
 @Controller()
 export class UsersController {
@@ -45,11 +45,7 @@ export class UsersController {
   @OpenAPI({ summary: 'Update a user' })
   async updateUser(@CookieParam("Authorization") res: string, @Body() userData: CreateUserDto) {
     const userId = tokenToId(res);
-    
     const updateUserData: UserDto = await this.userService.updateUser(userId, userData);
-    if (updateUserData == null) {
-      return { data: updateUserData, message: 'not updated' };
-    }
     return { data: updateUserData, message: 'updated' };
     
     

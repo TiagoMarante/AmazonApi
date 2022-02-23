@@ -41,8 +41,7 @@ model Img {
 
 model Product_Wharehouse {
   id          String  @id @default(cuid())
-  name        String? @unique
-  img         Img?    @relation(fields: [imgId], references: [id])
+  name        String  @unique
   grossweight Float
   netWeight   Float
   width       Float
@@ -50,8 +49,9 @@ model Product_Wharehouse {
   hscode      String
   price_acq   Float
   price_aux   Float[]
-  Ean         String
-  Stock       Stock?
+  ean         String
+  stock       Stock?
+  img         Img?    @relation(fields: [imgId], references: [id])
   imgId       String?
 }
 

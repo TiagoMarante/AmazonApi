@@ -2,13 +2,13 @@ import bcrypt from 'bcrypt';
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { isEmpty } from '@utils/util';
-import IUserService from '@/ApplicationServices/interfaces/user.interface';
 import { injectable } from 'inversify';
-import IUserRepository from '../interfaces/user_repo.interface';
+import IUserRepository from '../interfaces/user/user_repo.interface';
 import { injector } from '@/inversify.config';
 import { TYPES } from '@/../types';
 import { UserDto } from '../dtos/Applicattion/user.dto';
 import { User } from '@prisma/client';
+import IUserService from '../interfaces/user/user_serv.interface';
 
 @injectable()
 export class UserService implements IUserService {
@@ -21,9 +21,11 @@ export class UserService implements IUserService {
     
   }
 
-  public async findUserById(userId: string): Promise<UserDto> {
-    const findUser: UserDto = new UserDto(await this.usersRepository.findUserById(userId));
-    if (!findUser) throw new HttpException(409, "You're not user");
+  public async findUserById(id: string): Promise<UserDto> {
+    const user = await this.usersRepository.findUserById(id);
+    if (!user) throw new HttpException(409, "No User found with this key");
+    
+    const findUser: UserDto = new UserDto(user);
     
     return findUser;
   }
@@ -37,30 +39,38 @@ export class UserService implements IUserService {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
-    const newUser = new UserDto(await this.usersRepository.createUser(userData));
+    const user = await this.usersRepository.createUser(userData);
+    if(!user) throw new HttpException(409, "Error creating user");
+
+    const newUser = new UserDto(user);
 
     return newUser;
   }
 
-  public async updateUser(userId: string, userData: CreateUserDto): Promise<UserDto> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+  public async updateUser(id: string, userData: CreateUserDto): Promise<UserDto> {
+    if (isEmpty(userData)) throw new HttpException(400, "No user data given");
 
-    const findUser: UserDto = await this.usersRepository.findUserById(userId);
-    if (!findUser) throw new HttpException(409, "You're not user");
+    const findUser: UserDto = await this.usersRepository.findUserById(id);
+    if (!findUser) throw new HttpException(409, "No user found with this key");
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
-    const updatedUser: UserDto = new UserDto(await this.usersRepository.updateUser(userId, userData));
+    const newUser = await this.usersRepository.updateUser(id, userData);
+    if(!newUser) throw new HttpException(409, "Error updating user");
 
+    const updatedUser: UserDto = new UserDto(newUser);
     return updatedUser;
   }
 
-  public async deleteUser(userId: string): Promise<UserDto> {
-    const findUser: UserDto = await this.usersRepository.findUserById(userId);
-    if (!findUser) throw new HttpException(409, "You're not user");
+  public async deleteUser(id: string): Promise<UserDto> {
+    const findUser: UserDto = await this.usersRepository.findUserById(id);
+    if (!findUser) throw new HttpException(409, "No user found with this key");
 
-    const deleteUserData: UserDto = new UserDto(await this.usersRepository.deleteUser(userId));
+    const user = await this.usersRepository.deleteUser(id);
+    if(!user) throw new HttpException(409, "Error deleting user");
+
+    const deleteUserData: UserDto = new UserDto(user);
     return deleteUserData;
   }
 

@@ -8,7 +8,7 @@ import { injectable } from 'inversify';
 import config from 'config';
 import { TYPES } from '@/../types';
 import { injector } from '@/inversify.config';
-import IUserRepository from '../interfaces/user_repo.interface';
+import IUserRepository from '../interfaces/user/user_repo.interface';
 import { UserDto } from '../dtos/Applicattion/user.dto';
 import { LoginUserDto } from '../dtos/Swagger/user_login.dto';
 

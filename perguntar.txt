@@ -1,1 +1,22 @@
 o campo do price_aux e so para conter numeros ou tambem alguma informacao dos precos auxiliares
+
+"password": "$2b$10$l2Z2Gpvec1Vy1eZe6s51f.U4SBeJ6MKAZ.FiMjOYK1EQmBYl/gTK.",
+
+
+
+{
+  "name": "Bolachas de agua e sal",
+  "img": [
+    "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.continente.pt%2Fproduto%2Fbolachas-de-agua-e-sal-vieira-2628845.html&psig=AOvVaw0dr47WmrwXFzGYQDHxTgco&ust=1645735440151000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMCnhbTYlvYCFQAAAAAdAAAAABAD"
+  ],
+  "grossweight": 1,
+  "netWeight": 0.7,
+  "width": 10,
+  "lenght": 20,
+  "hscode": "76587586745",
+  "price_acq": "1.85",
+  "price_aux": [
+    "1.90","1.95","1.80"
+  ],
+  "ean": "khfgjkgfjhfk"
+}

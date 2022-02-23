@@ -1,5 +1,5 @@
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
-import IUserRepository from '@/ApplicationServices/interfaces/user_repo.interface';
+import IUserRepository from '@/ApplicationServices/interfaces/user/user_repo.interface';
 import prisma from '@/utils/db';
 import {  Img, User } from '@prisma/client';
 import { injectable } from 'inversify';
@@ -69,7 +69,7 @@ export class UserRepository implements IUserRepository {
     return user;
   }
 
-  public async updateUser(userId: string, userData: CreateUserDto): Promise<User> {
+  public async updateUser(id: string, userData: CreateUserDto): Promise<User> {
     /**
      * Update all Fields of a User
      */
@@ -77,7 +77,7 @@ export class UserRepository implements IUserRepository {
     try {
       const updatedUser = await prisma.user.update({
         where: {
-          id: userId,
+          id: id,
         },
         data: {
           username: userData.username,
@@ -100,14 +100,14 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  public async deleteUser(userId: string): Promise<User> {
+  public async deleteUser(id: string): Promise<User> {
     /**
      * Update all Fields of a User
      */
 
     const deleteUser = await prisma.user.delete({
       where: {
-        id: userId,
+        id: id,
       },
     });
 

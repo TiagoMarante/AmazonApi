@@ -7,8 +7,12 @@ import { AuthController } from '@/Adapters/controllers/auth.controller';
 import { IndexController } from '@/Adapters/controllers/index.controller';
 import { UsersController } from '@/Adapters/controllers/users.controller';
 import validateEnv from '@utils/validateEnv';
+import { ProductController } from './Adapters/controllers/product.controller';
 
 validateEnv();
 
-const app = new App([AuthController, IndexController, UsersController]);
+const app = new App([
+    AuthController, IndexController, 
+    UsersController, ProductController
+]);
 app.listen();

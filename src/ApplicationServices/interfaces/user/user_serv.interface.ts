@@ -1,5 +1,6 @@
-import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
-import { UserDto } from '../dtos/Applicattion/user.dto';
+import { UserDto } from "@/ApplicationServices/dtos/Applicattion/user.dto";
+import { CreateUserDto } from "@/ApplicationServices/dtos/Swagger/users.dto";
+
 
 export default interface IUserService {
   findAllUser(): Promise<UserDto[]>;
