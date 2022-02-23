@@ -8,18 +8,21 @@ import IUserRepository from '../interfaces/user_repo.interface';
 import { injector } from '@/inversify.config';
 import { TYPES } from '@/../types';
 import { UserDto } from '../dtos/Applicattion/user.dto';
+import { User } from '@prisma/client';
 
 @injectable()
 export class UserService implements IUserService {
   public usersRepository = injector.get<IUserRepository>(TYPES.IUserRepository);
 
   public async findAllUser(): Promise<UserDto[]> {
-    const users: UserDto[] = await this.usersRepository.findAllUser();
-    return users;
+    const users: User[] = await this.usersRepository.findAllUser();
+
+    return this.listToDto(users);
+    
   }
 
   public async findUserById(userId: string): Promise<UserDto> {
-    const findUser: UserDto = await this.usersRepository.findUserById(userId);
+    const findUser: UserDto = new UserDto(await this.usersRepository.findUserById(userId));
     if (!findUser) throw new HttpException(409, "You're not user");
     
     return findUser;
@@ -34,7 +37,7 @@ export class UserService implements IUserService {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
-    const newUser = await this.usersRepository.createUser(userData);
+    const newUser = new UserDto(await this.usersRepository.createUser(userData));
 
     return newUser;
   }
@@ -48,7 +51,7 @@ export class UserService implements IUserService {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
-    const updatedUser: UserDto = await this.usersRepository.updateUser(userId, userData);
+    const updatedUser: UserDto = new UserDto(await this.usersRepository.updateUser(userId, userData));
 
     return updatedUser;
   }
@@ -57,7 +60,18 @@ export class UserService implements IUserService {
     const findUser: UserDto = await this.usersRepository.findUserById(userId);
     if (!findUser) throw new HttpException(409, "You're not user");
 
-    const deleteUserData: UserDto = await this.usersRepository.deleteUser(userId);
+    const deleteUserData: UserDto = new UserDto(await this.usersRepository.deleteUser(userId));
     return deleteUserData;
+  }
+
+
+  private listToDto(list: User[]): UserDto[]{
+    const userList: UserDto[] = [];
+    
+    list.map((elem) => {
+      userList.push(new UserDto(elem))
+    });
+
+    return userList;
   }
 }
