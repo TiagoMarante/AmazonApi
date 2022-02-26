@@ -1,35 +1,52 @@
 import { Role } from '@prisma/client';
-import { IsArray, IsEmail, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsEmail, IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class CreateProductDto {
 
   @IsString()
+  @IsNotEmpty()
   public name: string;
 
   @IsArray()
+  @IsNotEmpty()
   public img: string[];
 
   @IsNumber()
+  @IsPositive()
+  @IsPositive()
+  @IsNotEmpty()
   public grossweight: number;
 
   @IsNumber()
+  @IsPositive()
+  @IsPositive()
+  @IsNotEmpty()
   public netWeight: number;
 
   @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
   public width: number;
 
   @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
   public lenght: number;
 
   @IsString()
+  @IsNotEmpty()
   public hscode: string;
   
   @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
   public price_acq: number;
 
   @IsNumber({},{each: true})
+  @IsNotEmpty()
   public price_aux: number[];
 
   @IsString()
+  @IsNotEmpty()
   public ean: string;
 }

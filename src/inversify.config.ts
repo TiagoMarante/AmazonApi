@@ -10,6 +10,10 @@ import IUserService from './ApplicationServices/interfaces/user/user_serv.interf
 import IUserRepository from './ApplicationServices/interfaces/user/user_repo.interface';
 import IProductService from './ApplicationServices/interfaces/product/product_serv.interface';
 import IProductRepository from './ApplicationServices/interfaces/product/product_repo.interface';
+import IStockService from './ApplicationServices/interfaces/stock/stock_serv.interface';
+import { StockService } from './ApplicationServices/services/stock.service';
+import IStockRepository from './ApplicationServices/interfaces/stock/stock_repo.interface';
+import { StockRepository } from './Adapters/repositories/stock.repository';
 
 
 const injector = new Container();
@@ -21,5 +25,9 @@ injector.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepository);
 
 injector.bind<IProductService>(TYPES.IProductService).to(ProductService);
 injector.bind<IProductRepository>(TYPES.IProductRepository).to(ProductRepository);
+
+
+injector.bind<IStockService>(TYPES.IStockService).to(StockService);
+injector.bind<IStockRepository>(TYPES.IStockRepository).to(StockRepository);
 
 export { injector };

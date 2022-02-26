@@ -6,6 +6,9 @@ const TYPES = {
 
     IProductService: Symbol.for("IProductService"),
     IProductRepository: Symbol.for("IProductRepository"),
+
+    IStockService: Symbol.for("IStockService"),
+    IStockRepository: Symbol.for("IStockRepository"),
 };
 
 export { TYPES };

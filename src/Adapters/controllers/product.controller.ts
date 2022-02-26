@@ -34,7 +34,7 @@ export class ProductController {
   @HttpCode(201)
   @UseBefore(validationMiddleware(CreateProductDto, 'body'))
   @OpenAPI({ summary: 'Create a new product' })
-  async createUser(@Body() productData: CreateProductDto) {
+  async createProduct(@Body() productData: CreateProductDto) {
     const createProductData: ProductDto = await this.productService.createProduct(productData);
     return { data: createProductData, message: 'created' };
   }
@@ -43,7 +43,7 @@ export class ProductController {
   @UseBefore(authMiddleware)
   @UseBefore(validationMiddleware(CreateProductDto, 'body', true))
   @OpenAPI({ summary: 'Update a user' })
-  async updateUser(@Param('id') id: string, @Body() productData: CreateProductDto) {
+  async updateProduct(@Param('id') id: string, @Body() productData: CreateProductDto) {
     const updateProduct: ProductDto = await this.productService.updateProduct(id, productData);
     return { data: updateProduct, message: 'updated' };
     
@@ -52,12 +52,10 @@ export class ProductController {
 
   @Delete('/product/:id')
   @UseBefore(authMiddleware)
-  @OpenAPI({ summary: 'Delete a user' })
-  async deleteUser(@CookieParam("Authorization") res: string) {
-    // const userId = tokenToId(res);
-
-    // const deleteUserData: UserDto = await this.userService.deleteUser(userId);
-    // return { data: deleteUserData, message: 'deleted' };
+  @OpenAPI({ summary: 'Return information about a product' })
+  async deleteProduct(@Param('id') id: string) {
+    const deleteProduct: ProductDto = await this.productService.deleteProduct(id);
+    return { data: deleteProduct, message: 'deleted' };
   }
 }
 

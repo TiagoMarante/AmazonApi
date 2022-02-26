@@ -41,6 +41,7 @@ export class ProductRepository implements IProductRepository {
      * Create a Product
      */
 
+
     const products = await prisma.product_Wharehouse.create({
       data: {
         name: product.name,
@@ -58,19 +59,19 @@ export class ProductRepository implements IProductRepository {
           }
         }
       }
-    })
+    });
 
     return products;
   }
 
 
   async updateProduct(id: string, product: CreateProductDto): Promise<Product_Wharehouse> {
-    
+
     /**
      * Update all fields of a Product
      */
 
-    
+
     try {
       const updateProduct = await prisma.product_Wharehouse.update({
         where: {
@@ -100,9 +101,18 @@ export class ProductRepository implements IProductRepository {
   }
 
 
-  deleteProduct(id: string): Promise<Product_Wharehouse> {
-    throw new Error('Method not implemented.');
-  }
+  async deleteProduct(id: string): Promise<Product_Wharehouse> {
+    /**
+     * Delete a Product
+     */
 
+    const deleteProduct = await prisma.product_Wharehouse.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return deleteProduct;
+  }
 
 }

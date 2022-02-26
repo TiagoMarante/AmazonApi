@@ -18,13 +18,13 @@ model User {
   cc          String?
   nif         String?
   permissions Role[]
-  img         Img?    @relation(fields: [imgId], references: [id])
+  img         Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   imgId       String?
 }
 
 model Stock {
   id           String             @id @default(cuid())
-  product      Product_Wharehouse @relation(fields: [product_WharehouseId], references: [id])
+  product      Product_Wharehouse @relation(fields: [product_WharehouseId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   currentStock Int
   neededStock  Int
 
@@ -46,12 +46,12 @@ model Product_Wharehouse {
   netWeight   Float
   width       Float
   lenght      Float
-  hscode      String
+  hscode      String  @unique
   price_acq   Float
   price_aux   Float[]
-  ean         String
+  ean         String  @unique
   stock       Stock?
-  img         Img?    @relation(fields: [imgId], references: [id])
+  img         Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   imgId       String?
 }
 

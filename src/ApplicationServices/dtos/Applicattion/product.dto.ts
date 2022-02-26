@@ -1,4 +1,4 @@
-import { Img, Product_Wharehouse, Role, User } from '@prisma/client';
+import { Product_Wharehouse } from '@prisma/client';
 
 export class ProductDto {
   id: string;

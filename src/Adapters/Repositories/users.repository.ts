@@ -102,7 +102,7 @@ export class UserRepository implements IUserRepository {
 
   public async deleteUser(id: string): Promise<User> {
     /**
-     * Update all Fields of a User
+     * Delete a User
      */
 
     const deleteUser = await prisma.user.delete({
