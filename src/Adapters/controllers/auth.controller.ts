@@ -23,7 +23,7 @@ export class AuthController {
 
   @Get('/login')
   @UseBefore(authMiddleware)
-  async loggedUser(@Req() req: RequestWithUser, @Res() res: Response) {
+  async loggedUser(@Req() req: RequestWithUser) {
     const userData: LoginUserDto = req.user;
 
     return { data: userData, message: 'logged' };
@@ -33,7 +33,7 @@ export class AuthController {
   @UseBefore(authMiddleware)
   async logOut(@Req() req: RequestWithUser, @Res() res: Response) {
     const userData: LoginUserDto = req.user;
-    
+
     const logOutUserData: UserDto = await this.authService.logout(userData);
 
     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);

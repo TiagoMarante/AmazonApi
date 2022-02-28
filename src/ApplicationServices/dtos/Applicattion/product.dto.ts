@@ -10,8 +10,8 @@ export class ProductDto {
   hscode: string;
   price_acq: number;
   price_aux: number[];
-  ean: string
-  imgId: string
+  ean: string;
+  imgId: string;
 
   constructor(product: Product_Wharehouse) {
     this.id = product.id;
@@ -26,5 +26,4 @@ export class ProductDto {
     this.ean = product.ean;
     this.imgId = product.imgId;
   }
-
 }

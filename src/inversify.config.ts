@@ -14,7 +14,10 @@ import IStockService from './ApplicationServices/interfaces/stock/stock_serv.int
 import { StockService } from './ApplicationServices/services/stock.service';
 import IStockRepository from './ApplicationServices/interfaces/stock/stock_repo.interface';
 import { StockRepository } from './Adapters/repositories/stock.repository';
-
+import ISupplierService from './ApplicationServices/interfaces/supplier/supplier_serv.interface';
+import ISupplierRepository from './ApplicationServices/interfaces/supplier/supplier_repo.interface';
+import SupplierRepository from './Adapters/repositories/supplier.repository';
+import SupplierService from './ApplicationServices/services/supplier.service';
 
 const injector = new Container();
 
@@ -26,8 +29,10 @@ injector.bind<IUserRepository>(TYPES.IUserRepository).to(UserRepository);
 injector.bind<IProductService>(TYPES.IProductService).to(ProductService);
 injector.bind<IProductRepository>(TYPES.IProductRepository).to(ProductRepository);
 
-
 injector.bind<IStockService>(TYPES.IStockService).to(StockService);
 injector.bind<IStockRepository>(TYPES.IStockRepository).to(StockRepository);
+
+injector.bind<ISupplierService>(TYPES.ISupplierService).to(SupplierService);
+injector.bind<ISupplierRepository>(TYPES.ISupplierRepository).to(SupplierRepository);
 
 export { injector };

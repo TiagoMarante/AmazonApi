@@ -10,6 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Users in the system
 model User {
   id          String  @id @default(cuid())
   username    String? @unique
@@ -22,6 +23,66 @@ model User {
   imgId       String?
 }
 
+
+
+
+
+
+
+
+
+
+
+// Products in the system
+model Product_Wharehouse {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  grossweight Float
+  netWeight   Float
+  width       Float
+  lenght      Float
+  hscode      String    @unique
+  price_acq   Float
+  price_aux   Float[]
+  ean         String    @unique
+  stock       Stock?
+  suplier     Suplier[]
+
+  img       Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  imgId     String?
+  suplierId String?
+}
+
+
+
+
+
+
+
+// All supliers of a product
+model Suplier {
+  id           String @id @default(cuid())
+  nif          String
+  name         String
+  address      String
+  email        String
+  quantity_box Float
+  price_box    Float
+  price_unit   Float
+
+
+  Product_Wharehouse   Product_Wharehouse? @relation(fields: [product_WharehouseId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  product_WharehouseId String?
+}
+
+
+
+
+
+
+
+
+// Stock of a product
 model Stock {
   id           String             @id @default(cuid())
   product      Product_Wharehouse @relation(fields: [product_WharehouseId], references: [id], onUpdate: Cascade, onDelete: Cascade)
@@ -31,6 +92,15 @@ model Stock {
   product_WharehouseId String @unique
 }
 
+
+
+
+
+
+
+
+
+// All images in the system
 model Img {
   id     String   @id @default(cuid())
   photos String[]
@@ -39,21 +109,16 @@ model Img {
   Product_Wharehouse Product_Wharehouse[]
 }
 
-model Product_Wharehouse {
-  id          String  @id @default(cuid())
-  name        String  @unique
-  grossweight Float
-  netWeight   Float
-  width       Float
-  lenght      Float
-  hscode      String  @unique
-  price_acq   Float
-  price_aux   Float[]
-  ean         String  @unique
-  stock       Stock?
-  img         Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  imgId       String?
-}
+
+
+
+
+
+
+
+
+
+
 
 enum Role {
   STOCK_MANAGER

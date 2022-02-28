@@ -9,7 +9,7 @@ import { authMiddleware } from '../middlewares/auth.middleware';
 import { validationMiddleware } from '../middlewares/validation.middleware';
 
 @Controller()
-export class StockController {
+export class SupplierController {
   public stockService = injector.get<IStockService>(TYPES.IStockService);
 
   @Get('/stocks')

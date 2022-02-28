@@ -12,9 +12,5 @@ import { StockController } from './Adapters/controllers/stock.controller';
 
 validateEnv();
 
-const app = new App([
-    AuthController, IndexController, 
-    UsersController, ProductController,
-    StockController
-]);
+const app = new App([AuthController, IndexController, UsersController, ProductController, StockController]);
 app.listen();

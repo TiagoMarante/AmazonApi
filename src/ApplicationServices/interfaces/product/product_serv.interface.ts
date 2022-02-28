@@ -1,7 +1,5 @@
 import { CreateProductDto } from '@/ApplicationServices/dtos/Swagger/product.dto';
-import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { ProductDto } from '../../dtos/Applicattion/product.dto';
-import { UserDto } from '../../dtos/Applicattion/user.dto';
 
 export default interface IProductService {
   findAllProducts(): Promise<ProductDto[]>;

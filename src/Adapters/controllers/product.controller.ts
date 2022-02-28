@@ -1,13 +1,12 @@
-import { TYPES } from "@/../types";
-import { ProductDto } from "@/ApplicationServices/dtos/Applicattion/product.dto";
-import { CreateProductDto } from "@/ApplicationServices/dtos/Swagger/product.dto";
-import { CreateUserDto } from "@/ApplicationServices/dtos/Swagger/users.dto";
-import IProductService from "@/ApplicationServices/interfaces/product/product_serv.interface";
-import { injector } from "@/inversify.config";
-import { Controller, Get, UseBefore, Param, Post, HttpCode, Body, Put, CookieParam, Delete } from "routing-controllers";
-import { OpenAPI } from "routing-controllers-openapi";
-import { authMiddleware } from "../middlewares/auth.middleware";
-import { validationMiddleware } from "../middlewares/validation.middleware";
+import { TYPES } from '@/../types';
+import { ProductDto } from '@/ApplicationServices/dtos/Applicattion/product.dto';
+import { CreateProductDto } from '@/ApplicationServices/dtos/Swagger/product.dto';
+import IProductService from '@/ApplicationServices/interfaces/product/product_serv.interface';
+import { injector } from '@/inversify.config';
+import { Controller, Get, UseBefore, Param, Post, HttpCode, Body, Put, Delete } from 'routing-controllers';
+import { OpenAPI } from 'routing-controllers-openapi';
+import { authMiddleware } from '../middlewares/auth.middleware';
+import { validationMiddleware } from '../middlewares/validation.middleware';
 
 @Controller()
 export class ProductController {
@@ -46,8 +45,6 @@ export class ProductController {
   async updateProduct(@Param('id') id: string, @Body() productData: CreateProductDto) {
     const updateProduct: ProductDto = await this.productService.updateProduct(id, productData);
     return { data: updateProduct, message: 'updated' };
-    
-    
   }
 
   @Delete('/product/:id')
@@ -58,5 +55,3 @@ export class ProductController {
     return { data: deleteProduct, message: 'deleted' };
   }
 }
-
-

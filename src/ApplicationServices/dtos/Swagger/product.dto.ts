@@ -1,8 +1,6 @@
-import { Role } from '@prisma/client';
-import { IsArray, IsEmail, IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class CreateProductDto {
-
   @IsString()
   @IsNotEmpty()
   public name: string;
@@ -13,12 +11,10 @@ export class CreateProductDto {
 
   @IsNumber()
   @IsPositive()
-  @IsPositive()
   @IsNotEmpty()
   public grossweight: number;
 
   @IsNumber()
-  @IsPositive()
   @IsPositive()
   @IsNotEmpty()
   public netWeight: number;
@@ -36,13 +32,13 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   public hscode: string;
-  
+
   @IsNumber()
   @IsPositive()
   @IsNotEmpty()
   public price_acq: number;
 
-  @IsNumber({},{each: true})
+  @IsNumber({}, { each: true })
   @IsNotEmpty()
   public price_aux: number[];
 

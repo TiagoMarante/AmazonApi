@@ -1,5 +1,5 @@
-import { CreateProductDto } from "@/ApplicationServices/dtos/Swagger/product.dto";
-import { Product_Wharehouse } from "@prisma/client";
+import { CreateProductDto } from '@/ApplicationServices/dtos/Swagger/product.dto';
+import { Product_Wharehouse } from '@prisma/client';
 
 export default interface IProductRepository {
   findAllProducts(): Promise<Product_Wharehouse[]>;

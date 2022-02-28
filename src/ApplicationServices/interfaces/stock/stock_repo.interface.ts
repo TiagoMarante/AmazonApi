@@ -1,6 +1,5 @@
-import { CreateProductDto } from "@/ApplicationServices/dtos/Swagger/product.dto";
-import { UpdateStockDto } from "@/ApplicationServices/dtos/Swagger/stock.dto";
-import { Product_Wharehouse, Stock } from "@prisma/client";
+import { UpdateStockDto } from '@/ApplicationServices/dtos/Swagger/stock.dto';
+import { Stock } from '@prisma/client';
 
 export default interface IStockRepository {
   findAllStock(): Promise<Stock[]>;

@@ -1,4 +1,4 @@
-import { Role, User } from '@prisma/client';
+import { User } from '@prisma/client';
 
 export class UserDto {
   id: string;
@@ -9,7 +9,6 @@ export class UserDto {
   nif: string;
   imgId: string;
 
-
   constructor(user: User) {
     this.id = user.id;
     this.username = user.username;
@@ -19,5 +18,4 @@ export class UserDto {
     this.nif = user.nif;
     this.imgId = user.imgId;
   }
-
 }

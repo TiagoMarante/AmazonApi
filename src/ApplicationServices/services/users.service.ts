@@ -18,15 +18,14 @@ export class UserService implements IUserService {
     const users: User[] = await this.usersRepository.findAllUser();
 
     return this.listToDto(users);
-    
   }
 
   public async findUserById(id: string): Promise<UserDto> {
     const user = await this.usersRepository.findUserById(id);
-    if (!user) throw new HttpException(409, "No User found with this key");
-    
+    if (!user) throw new HttpException(409, 'No User found with this key');
+
     const findUser: UserDto = new UserDto(user);
-    
+
     return findUser;
   }
 
@@ -40,7 +39,7 @@ export class UserService implements IUserService {
     userData.password = hashedPassword;
 
     const user = await this.usersRepository.createUser(userData);
-    if(!user) throw new HttpException(409, "Error creating user");
+    if (!user) throw new HttpException(409, 'Error creating user');
 
     const newUser = new UserDto(user);
 
@@ -48,16 +47,16 @@ export class UserService implements IUserService {
   }
 
   public async updateUser(id: string, userData: CreateUserDto): Promise<UserDto> {
-    if (isEmpty(userData)) throw new HttpException(400, "No user data given");
+    if (isEmpty(userData)) throw new HttpException(400, 'No user data given');
 
     const findUser: UserDto = await this.usersRepository.findUserById(id);
-    if (!findUser) throw new HttpException(409, "No user found with this key");
+    if (!findUser) throw new HttpException(409, 'No user found with this key');
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
     const newUser = await this.usersRepository.updateUser(id, userData);
-    if(!newUser) throw new HttpException(409, "Error updating user");
+    if (!newUser) throw new HttpException(409, 'Error updating user');
 
     const updatedUser: UserDto = new UserDto(newUser);
     return updatedUser;
@@ -65,21 +64,20 @@ export class UserService implements IUserService {
 
   public async deleteUser(id: string): Promise<UserDto> {
     const findUser: UserDto = await this.usersRepository.findUserById(id);
-    if (!findUser) throw new HttpException(409, "No user found with this key");
+    if (!findUser) throw new HttpException(409, 'No user found with this key');
 
     const user = await this.usersRepository.deleteUser(id);
-    if(!user) throw new HttpException(409, "Error deleting user");
+    if (!user) throw new HttpException(409, 'Error deleting user');
 
     const deleteUserData: UserDto = new UserDto(user);
     return deleteUserData;
   }
 
-
-  private listToDto(list: User[]): UserDto[]{
+  private listToDto(list: User[]): UserDto[] {
     const userList: UserDto[] = [];
-    
-    list.map((elem) => {
-      userList.push(new UserDto(elem))
+
+    list.map(elem => {
+      userList.push(new UserDto(elem));
     });
 
     return userList;

@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class UpdateStockDto {
-
   @IsString()
   @IsNotEmpty()
   public id: string;

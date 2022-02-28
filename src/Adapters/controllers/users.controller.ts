@@ -43,23 +43,19 @@ export class UsersController {
   @UseBefore(authMiddleware)
   @UseBefore(validationMiddleware(CreateUserDto, 'body', true))
   @OpenAPI({ summary: 'Update a user' })
-  async updateUser(@CookieParam("Authorization") res: string, @Body() userData: CreateUserDto) {
+  async updateUser(@CookieParam('Authorization') res: string, @Body() userData: CreateUserDto) {
     const userId = tokenToId(res);
     const updateUserData: UserDto = await this.userService.updateUser(userId, userData);
     return { data: updateUserData, message: 'updated' };
-    
-    
   }
 
   @Delete('/users')
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: 'Delete a user' })
-  async deleteUser(@CookieParam("Authorization") res: string) {
+  async deleteUser(@CookieParam('Authorization') res: string) {
     const userId = tokenToId(res);
 
     const deleteUserData: UserDto = await this.userService.deleteUser(userId);
     return { data: deleteUserData, message: 'deleted' };
   }
 }
-
-

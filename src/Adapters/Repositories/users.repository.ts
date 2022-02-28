@@ -1,12 +1,11 @@
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import IUserRepository from '@/ApplicationServices/interfaces/user/user_repo.interface';
 import prisma from '@/utils/db';
-import {  Img, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { injectable } from 'inversify';
 
 @injectable()
 export class UserRepository implements IUserRepository {
-
   public async findAllUser(): Promise<User[]> {
     /**
      * Find All Users
@@ -57,14 +56,13 @@ export class UserRepository implements IUserRepository {
         cc: userData.cc,
         nif: userData.nif,
         permissions: userData.permissions,
-        img:{
-          create:{
-            photos: userData.photo
-          }
-        }
+        img: {
+          create: {
+            photos: userData.photo,
+          },
+        },
       },
     });
-
 
     return user;
   }
@@ -86,11 +84,11 @@ export class UserRepository implements IUserRepository {
           cc: userData.cc,
           nif: userData.nif,
           permissions: userData.permissions,
-          img:{
-            create:{
-              photos: userData.photo
-            }
-          }
+          img: {
+            create: {
+              photos: userData.photo,
+            },
+          },
         },
       });
 
