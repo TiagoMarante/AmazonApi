@@ -1,4 +1,4 @@
-import { TYPES } from '@/../types';
+import { TYPES } from '@/types';
 import { StockDto } from '@/ApplicationServices/dtos/Applicattion/stock.dto';
 import { UpdateStockDto } from '@/ApplicationServices/dtos/Swagger/stock.dto';
 import IStockService from '@/ApplicationServices/interfaces/stock/stock_serv.interface';

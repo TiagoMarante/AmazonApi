@@ -1,6 +1,7 @@
-import { TYPES } from '@/../types';
+;
 import { HttpException } from '@/exceptions/HttpException';
 import { injector } from '@/inversify.config';
+import { TYPES } from '@/types';
 import { Stock } from '@prisma/client';
 import { injectable } from 'inversify';
 import { StockDto } from '../dtos/Applicattion/stock.dto';

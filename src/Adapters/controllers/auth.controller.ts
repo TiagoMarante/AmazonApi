@@ -4,7 +4,7 @@ import IAuthService, { RequestWithUser } from '@/ApplicationServices/interfaces/
 import { UserDto } from '@/ApplicationServices/dtos/Applicattion/user.dto';
 import { LoginUserDto } from '@/ApplicationServices/dtos/Swagger/user_login.dto';
 import { injector } from '@/inversify.config';
-import { TYPES } from '@/../types';
+import { TYPES } from '@/types';
 import { validationMiddleware } from '../middlewares/validation.middleware';
 import { authMiddleware } from '../middlewares/auth.middleware';
 

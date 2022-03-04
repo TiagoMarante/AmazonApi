@@ -5,10 +5,10 @@ import { isEmpty } from '@utils/util';
 import { injectable } from 'inversify';
 import IUserRepository from '../interfaces/user/user_repo.interface';
 import { injector } from '@/inversify.config';
-import { TYPES } from '@/../types';
 import { UserDto } from '../dtos/Applicattion/user.dto';
 import { User } from '@prisma/client';
 import IUserService from '../interfaces/user/user_serv.interface';
+import { TYPES } from '@/types';
 
 @injectable()
 export class UserService implements IUserService {

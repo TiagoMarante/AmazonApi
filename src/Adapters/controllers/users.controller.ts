@@ -2,7 +2,7 @@ import { Controller, Param, Body, Get, Post, Put, Delete, HttpCode, UseBefore, C
 import { OpenAPI } from 'routing-controllers-openapi';
 import { CreateUserDto } from '@/ApplicationServices/dtos/Swagger/users.dto';
 import { validationMiddleware } from '@/Adapters/middlewares/validation.middleware';
-import { TYPES } from '@/../types';
+import { TYPES } from '@/types';
 import { injector } from '@/inversify.config';
 import { UserDto } from '@/ApplicationServices/dtos/Applicattion/user.dto';
 import { authMiddleware, onlyAdminsMiddleware } from '../middlewares/auth.middleware';
@@ -30,7 +30,7 @@ export class UsersController {
   }
 
   @Post('/users')
-  @UseBefore(onlyAdminsMiddleware)
+  //@UseBefore(onlyAdminsMiddleware)
   @HttpCode(201)
   @UseBefore(validationMiddleware(CreateUserDto, 'body'))
   @OpenAPI({ summary: 'Create a new user' })

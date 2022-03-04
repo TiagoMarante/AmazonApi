@@ -1,4 +1,4 @@
-import { TYPES } from '@/../types';
+import { TYPES } from '@/types';
 import { ProductDto } from '@/ApplicationServices/dtos/Applicattion/product.dto';
 import { CreateProductDto } from '@/ApplicationServices/dtos/Swagger/product.dto';
 import IProductService from '@/ApplicationServices/interfaces/product/product_serv.interface';

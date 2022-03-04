@@ -23,44 +23,28 @@ model User {
   imgId       String?
 }
 
-
-
-
-
-
-
-
-
-
-
 // Products in the system
 model Product_Wharehouse {
-  id          String    @id @default(cuid())
-  name        String    @unique
+  id          String     @id @default(cuid())
+  name        String     @unique
   grossweight Float
   netWeight   Float
   width       Float
   lenght      Float
-  hscode      String    @unique
+  hscode      String     @unique
   price_acq   Float
   price_aux   Float[]
-  ean         String    @unique
+  ean         String     @unique
   stock       Stock?
-  suplier     Suplier[]
+  suplier     Supplier[]
 
   img       Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   imgId     String?
   suplierId String?
 }
 
-
-
-
-
-
-
 // All supliers of a product
-model Suplier {
+model Supplier {
   id           String @id @default(cuid())
   nif          String
   name         String
@@ -75,13 +59,6 @@ model Suplier {
   product_WharehouseId String?
 }
 
-
-
-
-
-
-
-
 // Stock of a product
 model Stock {
   id           String             @id @default(cuid())
@@ -92,14 +69,6 @@ model Stock {
   product_WharehouseId String @unique
 }
 
-
-
-
-
-
-
-
-
 // All images in the system
 model Img {
   id     String   @id @default(cuid())
@@ -108,17 +77,6 @@ model Img {
   User               User[]
   Product_Wharehouse Product_Wharehouse[]
 }
-
-
-
-
-
-
-
-
-
-
-
 
 enum Role {
   STOCK_MANAGER

@@ -1,4 +1,4 @@
-import { TYPES } from '@/../types';
+import { TYPES } from '@/types';
 import { HttpException } from '@/exceptions/HttpException';
 import { injector } from '@/inversify.config';
 import { Product_Wharehouse } from '@prisma/client';

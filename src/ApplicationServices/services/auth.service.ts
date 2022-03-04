@@ -6,11 +6,12 @@ import IAuthService, { DataStoredInToken, TokenData } from '@/ApplicationService
 import { isEmpty } from '@utils/util';
 import { injectable } from 'inversify';
 import config from 'config';
-import { TYPES } from '@/../types';
+import { TYPES } from '@/types';
 import { injector } from '@/inversify.config';
 import IUserRepository from '../interfaces/user/user_repo.interface';
 import { UserDto } from '../dtos/Applicattion/user.dto';
 import { LoginUserDto } from '../dtos/Swagger/user_login.dto';
+import { User } from '@prisma/client';
 
 @injectable()
 class AuthService implements IAuthService {
@@ -34,7 +35,7 @@ class AuthService implements IAuthService {
   public async login(userData: LoginUserDto): Promise<{ cookie: string; findUser: UserDto }> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: UserDto = await this.usersRepository.findUserByEmail(userData.email);
+    const findUser: User = await this.usersRepository.findUserByEmail(userData.email);
     if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
 
     const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
@@ -55,7 +56,7 @@ class AuthService implements IAuthService {
     return findUser;
   }
 
-  public createToken(user: UserDto): TokenData {
+  public createToken(user: User): TokenData {
     /**
      * One hour Token
      */

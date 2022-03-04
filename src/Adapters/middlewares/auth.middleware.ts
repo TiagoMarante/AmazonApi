@@ -3,9 +3,9 @@ import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, RequestWithUser } from '@/ApplicationServices/interfaces/auth.interface';
-import { TYPES } from '@/../types';
+import { TYPES } from '@/types';
 import { injector } from '@/inversify.config';
-import IUserService from '@/ApplicationServices/interfaces/user.interface';
+import IUserService from '@/ApplicationServices/interfaces/user/user_serv.interface';
 
 export const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   const userService = injector.get<IUserService>(TYPES.IUserService);
