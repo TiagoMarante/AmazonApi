@@ -22,7 +22,6 @@ export class ProductService implements IProductService {
   async findProductById(id: string): Promise<ProductDto> {
     const product: Product_Wharehouse = await this.productRepository.findProductById(id);
 
-
     if (!product) throw new HttpException(409, 'No product found with this key');
     const findProduct: ProductDto = new ProductDto(product);
 

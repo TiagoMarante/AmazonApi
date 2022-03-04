@@ -16,7 +16,7 @@ export class UserRepository implements IUserRepository {
     return users;
   }
 
-  public async findUserById(id: string): Promise<User> {
+  public async findUserById(id: string): Promise<User | null> {
     /**
      * Find User by Id
      */
@@ -30,7 +30,7 @@ export class UserRepository implements IUserRepository {
     return user;
   }
 
-  public async findUserByEmail(email: string): Promise<User> {
+  public async findUserByEmail(email: string): Promise<User | null> {
     /**
      * Find User by Id
      */
@@ -67,7 +67,7 @@ export class UserRepository implements IUserRepository {
     return user;
   }
 
-  public async updateUser(id: string, userData: CreateUserDto): Promise<User> {
+  public async updateUser(id: string, userData: CreateUserDto): Promise<User | null> {
     /**
      * Update all Fields of a User
      */

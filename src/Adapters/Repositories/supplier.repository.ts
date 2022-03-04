@@ -7,7 +7,6 @@ import { injectable } from 'inversify';
 
 @injectable()
 export default class SupplierRepository implements ISupplierRepository {
-
   async findSupplierById(id: string): Promise<Supplier> {
     /**
      * Find Single Supplier
@@ -22,7 +21,6 @@ export default class SupplierRepository implements ISupplierRepository {
     return suppliers;
   }
 
-
   async findAllProductSuppliers(productId: string): Promise<Supplier[]> {
     /**
      * Find All Products Suppliers
@@ -30,13 +28,12 @@ export default class SupplierRepository implements ISupplierRepository {
 
     const suppliers = await prisma.supplier.findMany({
       where: {
-        product_WharehouseId: productId
+        product_WharehouseId: productId,
       },
     });
 
     return suppliers;
   }
-
 
   async createSupplier(productId: string, supplierData: CreateSupplierDto): Promise<Supplier> {
     /**
@@ -55,9 +52,6 @@ export default class SupplierRepository implements ISupplierRepository {
         product_WharehouseId: productId,
       },
     });
-
-
-
 
     return newSupplier;
   }

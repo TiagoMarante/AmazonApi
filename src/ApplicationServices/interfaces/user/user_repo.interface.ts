@@ -3,9 +3,9 @@ import { CreateUserDto } from '../../dtos/Swagger/users.dto';
 
 export default interface IUserRepository {
   findAllUser(): Promise<User[]>;
-  findUserById(id: string): Promise<User>;
-  findUserByEmail(email: string): Promise<User>;
+  findUserById(id: string): Promise<User | null>;
+  findUserByEmail(email: string): Promise<User | null>;
   createUser(userData: CreateUserDto): Promise<User>;
-  updateUser(id: string, userData: CreateUserDto): Promise<User>;
+  updateUser(id: string, userData: CreateUserDto): Promise<User | null>;
   deleteUser(id: string): Promise<User>;
 }

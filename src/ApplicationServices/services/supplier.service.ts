@@ -10,7 +10,6 @@ import { CreateSupplierDto } from '../dtos/Swagger/supplier.dto';
 
 @injectable()
 export class SupplierService implements ISupplierService {
-
   public supplierRepository = injector.get<ISupplierRepository>(TYPES.ISupplierRepository);
 
   async findSupplierById(id: string): Promise<SupplierDto> {
@@ -57,7 +56,6 @@ export class SupplierService implements ISupplierService {
     const deleteSupplier: SupplierDto = new SupplierDto(await this.supplierRepository.deleteSupplier(id));
     return deleteSupplier;
   }
-
 
   private listToDto(list: Supplier[]): SupplierDto[] {
     const supplierList: SupplierDto[] = [];

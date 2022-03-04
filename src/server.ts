@@ -13,8 +13,5 @@ import { SupplierController } from './Adapters/controllers/supplier.controller';
 
 validateEnv();
 
-const app = new App([
-    AuthController, IndexController,
-    UsersController, ProductController,
-    StockController, SupplierController]);
+const app = new App([AuthController, IndexController, UsersController, ProductController, StockController, SupplierController]);
 app.listen();

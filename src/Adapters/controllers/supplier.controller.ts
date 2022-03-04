@@ -1,4 +1,3 @@
-
 import { SupplierDto } from '@/ApplicationServices/dtos/Applicattion/supplier.dto';
 import { CreateSupplierDto } from '@/ApplicationServices/dtos/Swagger/supplier.dto';
 import ISupplierService from '@/ApplicationServices/interfaces/supplier/supplier_serv.interface';
@@ -22,7 +21,6 @@ export class SupplierController {
     return { data: newSupplier, message: 'created' };
   }
 
-
   @Get('/supplier/:productId')
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: 'Return information about all suppliers of a product' })
@@ -30,8 +28,6 @@ export class SupplierController {
     const findAllSuppliers: SupplierDto[] = await this.supplierService.findAllProductSuppliers(productId);
     return { data: findAllSuppliers, message: 'findAll' };
   }
-
-
 
   @Get('/supplier/:id')
   @UseBefore(authMiddleware)
