@@ -36,11 +36,11 @@ model Product_Wharehouse {
   price_aux   Float[]
   ean         String     @unique
   stock       Stock?
-  suplier     Supplier[]
+  supplier    Supplier[]
 
-  img       Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  imgId     String?
-  suplierId String?
+  img        Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  imgId      String?
+  supplierId String?
 }
 
 // All supliers of a product

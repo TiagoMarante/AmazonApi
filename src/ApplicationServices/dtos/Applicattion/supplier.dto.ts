@@ -1,4 +1,4 @@
-import { Suplier } from '@prisma/client';
+import { Supplier } from '@prisma/client';
 
 export class SupplierDto {
   id: string;
@@ -10,7 +10,7 @@ export class SupplierDto {
   price_box: number;
   price_unit: number;
 
-  constructor(supplier: Suplier) {
+  constructor(supplier: Supplier) {
     this.id = supplier.id;
     this.nif = supplier.nif;
     this.name = supplier.name;

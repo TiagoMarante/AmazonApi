@@ -1,4 +1,3 @@
-
 import { UserService } from './ApplicationServices/services/users.service';
 import { Container } from 'inversify';
 import { ProductService } from './ApplicationServices/services/product.service';
@@ -17,8 +16,8 @@ import { StockRepository } from './Adapters/repositories/stock.repository';
 import ISupplierService from './ApplicationServices/interfaces/supplier/supplier_serv.interface';
 import ISupplierRepository from './ApplicationServices/interfaces/supplier/supplier_repo.interface';
 import SupplierRepository from './Adapters/repositories/supplier.repository';
-import SupplierService from './ApplicationServices/services/supplier.service';
 import { TYPES } from './types';
+import { SupplierService } from './ApplicationServices/services/supplier.service';
 
 const injector = new Container();
 

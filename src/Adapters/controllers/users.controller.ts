@@ -30,7 +30,7 @@ export class UsersController {
   }
 
   @Post('/users')
-  //@UseBefore(onlyAdminsMiddleware)
+  @UseBefore(onlyAdminsMiddleware)
   @HttpCode(201)
   @UseBefore(validationMiddleware(CreateUserDto, 'body'))
   @OpenAPI({ summary: 'Create a new user' })

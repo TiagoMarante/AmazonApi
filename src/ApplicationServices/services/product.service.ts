@@ -22,6 +22,7 @@ export class ProductService implements IProductService {
   async findProductById(id: string): Promise<ProductDto> {
     const product: Product_Wharehouse = await this.productRepository.findProductById(id);
 
+
     if (!product) throw new HttpException(409, 'No product found with this key');
     const findProduct: ProductDto = new ProductDto(product);
 
@@ -66,12 +67,12 @@ export class ProductService implements IProductService {
   }
 
   private listToDto(list: Product_Wharehouse[]): ProductDto[] {
-    const userList: ProductDto[] = [];
+    const productsList: ProductDto[] = [];
 
     list.map(elem => {
-      userList.push(new ProductDto(elem));
+      productsList.push(new ProductDto(elem));
     });
 
-    return userList;
+    return productsList;
   }
 }

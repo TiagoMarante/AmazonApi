@@ -1,9 +1,9 @@
 import { IsEmail, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
-export class createSupplierDto {
+export class CreateSupplierDto {
   @IsString()
   @IsNotEmpty()
-  public nif: string[];
+  public nif: string;
 
   @IsString()
   @IsNotEmpty()

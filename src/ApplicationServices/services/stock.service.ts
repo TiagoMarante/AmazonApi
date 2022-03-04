@@ -1,4 +1,3 @@
-;
 import { HttpException } from '@/exceptions/HttpException';
 import { injector } from '@/inversify.config';
 import { TYPES } from '@/types';
