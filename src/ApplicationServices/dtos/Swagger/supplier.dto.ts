@@ -1,4 +1,4 @@
-import { IsEmail, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsEmail, IsInt, IsNotEmpty, IsNumber, IsPositive, IsString, Min } from 'class-validator';
 
 export class CreateSupplierDto {
   @IsString()
@@ -31,4 +31,9 @@ export class CreateSupplierDto {
   @IsPositive()
   @IsNotEmpty()
   public price_unit: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Min(0)
+  public version: number;
 }

@@ -14,4 +14,9 @@ export class UpdateStockDto {
   @Min(0)
   @IsNotEmpty()
   public needed: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Min(0)
+  public version: number;
 }

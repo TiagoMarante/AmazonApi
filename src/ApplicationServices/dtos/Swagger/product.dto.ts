@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsNumber, IsPositive, IsString, Min } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -45,4 +45,9 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   public ean: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Min(0)
+  public version: number;
 }

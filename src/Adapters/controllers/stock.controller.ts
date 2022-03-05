@@ -33,7 +33,7 @@ export class StockController {
   @UseBefore(validationMiddleware(UpdateStockDto, 'body', true))
   @OpenAPI({ summary: 'Add products to stock' })
   async addCurrentStock(@Body() stockData: UpdateStockDto) {
-    const updateStock: StockDto = await this.stockService.updateStock(stockData);
-    return { data: updateStock, message: 'added current' };
+    const updatedStock: Number = await this.stockService.updateStock(stockData);
+    return { data: updatedStock, message: 'Stock Updated' };
   }
 }

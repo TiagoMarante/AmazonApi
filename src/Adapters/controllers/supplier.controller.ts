@@ -21,7 +21,7 @@ export class SupplierController {
     return { data: newSupplier, message: 'created' };
   }
 
-  @Get('/supplier/:productId')
+  @Get('/supplier/product/:productId')
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: 'Return information about all suppliers of a product' })
   async getAllSuppliersOfaProduct(@Param('productId') productId: string) {
@@ -42,8 +42,8 @@ export class SupplierController {
   @UseBefore(validationMiddleware(CreateSupplierDto, 'body', true))
   @OpenAPI({ summary: 'Update Supplier' })
   async addCurrentStock(@Param('id') id: string, @Body() supplierData: CreateSupplierDto) {
-    const updateSupplier: SupplierDto = await this.supplierService.updateSupplier(id, supplierData);
-    return { data: updateSupplier, message: 'updated' };
+    const updatedSupplier: Number = await this.supplierService.updateSupplier(id, supplierData);
+    return { data: updatedSupplier, message: 'Supplier updated' };
   }
 
   @Delete('/supplier/:id')

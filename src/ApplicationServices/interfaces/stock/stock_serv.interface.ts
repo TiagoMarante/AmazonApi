@@ -5,5 +5,5 @@ export default interface IStockService {
   findAllStock(): Promise<StockDto[]>;
   findStockById(id: string): Promise<StockDto>;
   createStock(product: string): Promise<StockDto>;
-  updateStock(stock: UpdateStockDto): Promise<StockDto>;
+  updateStock(stock: UpdateStockDto): Promise<Number>;
 }

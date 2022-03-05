@@ -38,17 +38,12 @@ export class StockService implements IStockService {
     return newStock;
   }
 
-  async updateStock(stock: UpdateStockDto): Promise<StockDto> {
+  async updateStock(stock: UpdateStockDto): Promise<Number> {
     const findStock: Stock = await this.stockRepository.findStockById(stock.id);
     if (!findStock) throw new HttpException(409, 'No stock found with this key');
 
-    let updateStock: StockDto;
-
-    try {
-      updateStock = new StockDto(await this.stockRepository.updateStock(stock.id, stock));
-    } catch (error) {
-      throw new HttpException(409, 'Error updating current product stock');
-    }
+    const updateStock = await this.stockRepository.updateStock(stock.id, stock);
+    if (updateStock <= 0) throw new HttpException(409, 'Error updating current product stock');
 
     return updateStock;
   }

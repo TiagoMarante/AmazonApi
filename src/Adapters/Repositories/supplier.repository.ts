@@ -12,13 +12,13 @@ export default class SupplierRepository implements ISupplierRepository {
      * Find Single Supplier
      */
 
-    const suppliers = await prisma.supplier.findUnique({
+    const supplier = await prisma.supplier.findUnique({
       where: {
         id: id,
       },
     });
 
-    return suppliers;
+    return supplier;
   }
 
   async findAllProductSuppliers(productId: string): Promise<Supplier[]> {
@@ -50,21 +50,23 @@ export default class SupplierRepository implements ISupplierRepository {
         price_box: supplierData.price_box,
         price_unit: supplierData.price_unit,
         product_WharehouseId: productId,
+        version: 0,
       },
     });
 
     return newSupplier;
   }
 
-  async updateSupplier(id: string, supplierData: CreateSupplierDto): Promise<Supplier> {
+  async updateSupplier(id: string, supplierData: CreateSupplierDto): Promise<Number> {
     /**
      * Update Supplier
      */
 
     try {
-      const updateSupplier = await prisma.supplier.update({
+      const updateSupplier = await prisma.supplier.updateMany({
         where: {
           id: id,
+          version: supplierData.version,
         },
         data: {
           nif: supplierData.nif,
@@ -74,10 +76,13 @@ export default class SupplierRepository implements ISupplierRepository {
           quantity_box: supplierData.quantity_box,
           price_box: supplierData.price_box,
           price_unit: supplierData.price_unit,
+          version: {
+            increment: 1,
+          },
         },
       });
 
-      return updateSupplier;
+      return updateSupplier.count;
     } catch (error) {
       return null;
     }

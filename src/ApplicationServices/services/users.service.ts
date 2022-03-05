@@ -46,7 +46,7 @@ export class UserService implements IUserService {
     return newUser;
   }
 
-  public async updateUser(id: string, userData: CreateUserDto): Promise<UserDto> {
+  public async updateUser(id: string, userData: CreateUserDto): Promise<Number> {
     if (isEmpty(userData)) throw new HttpException(400, 'No user data given');
 
     const findUser: UserDto = await this.usersRepository.findUserById(id);
@@ -55,11 +55,10 @@ export class UserService implements IUserService {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     userData.password = hashedPassword;
 
-    const newUser = await this.usersRepository.updateUser(id, userData);
-    if (!newUser) throw new HttpException(409, 'Error updating user');
+    const updateUser: Number = await this.usersRepository.updateUser(id, userData);
+    if (updateUser <= 0) throw new HttpException(409, 'Error updating user');
 
-    const updatedUser: UserDto = new UserDto(newUser);
-    return updatedUser;
+    return updateUser;
   }
 
   public async deleteUser(id: string): Promise<UserDto> {

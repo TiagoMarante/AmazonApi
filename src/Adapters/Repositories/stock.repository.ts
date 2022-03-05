@@ -40,29 +40,34 @@ export class StockRepository implements IStockRepository {
         currentStock: 0,
         neededStock: 0,
         product_WharehouseId: productId,
+        version: 0,
       },
     });
 
     return stock;
   }
 
-  async updateStock(id: string, stock: UpdateStockDto): Promise<Stock> {
+  async updateStock(id: string, stock: UpdateStockDto): Promise<Number> {
     /**
      * Update current stock and in need stock
      */
 
     try {
-      const updatedStock = await prisma.stock.update({
+      const updatedStock = await prisma.stock.updateMany({
         where: {
           id: id,
+          version: stock.version,
         },
         data: {
           currentStock: stock.current,
           neededStock: stock.needed,
+          version: {
+            increment: 1,
+          },
         },
       });
 
-      return updatedStock;
+      return updatedStock.count;
     } catch (error) {
       return null;
     }

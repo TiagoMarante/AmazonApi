@@ -12,6 +12,7 @@ export class ProductDto {
   price_aux: number[];
   ean: string;
   imgId: string;
+  version: number;
 
   constructor(product: Product_Wharehouse) {
     this.id = product.id;
@@ -25,5 +26,6 @@ export class ProductDto {
     this.price_aux = product.price_aux;
     this.ean = product.ean;
     this.imgId = product.imgId;
+    this.version = product.version;
   }
 }

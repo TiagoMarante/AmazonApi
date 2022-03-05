@@ -5,6 +5,6 @@ export default interface IProductRepository {
   findAllProducts(): Promise<Product_Wharehouse[]>;
   findProductById(id: string): Promise<Product_Wharehouse>;
   createProduct(product: CreateProductDto): Promise<Product_Wharehouse>;
-  updateProduct(productId: string, userData: CreateProductDto): Promise<Product_Wharehouse>;
+  updateProduct(productId: string, userData: CreateProductDto): Promise<Number>;
   deleteProduct(productId: string): Promise<Product_Wharehouse>;
 }

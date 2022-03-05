@@ -56,6 +56,7 @@ export class UserRepository implements IUserRepository {
         cc: userData.cc,
         nif: userData.nif,
         permissions: userData.permissions,
+        version: 0,
         img: {
           create: {
             photos: userData.photo,
@@ -67,15 +68,16 @@ export class UserRepository implements IUserRepository {
     return user;
   }
 
-  public async updateUser(id: string, userData: CreateUserDto): Promise<User | null> {
+  public async updateUser(id: string, userData: CreateUserDto): Promise<Number> {
     /**
      * Update all Fields of a User
      */
 
     try {
-      const updatedUser = await prisma.user.update({
+      const updateUser = await prisma.user.updateMany({
         where: {
           id: id,
+          version: userData.version,
         },
         data: {
           username: userData.username,
@@ -84,15 +86,13 @@ export class UserRepository implements IUserRepository {
           cc: userData.cc,
           nif: userData.nif,
           permissions: userData.permissions,
-          img: {
-            create: {
-              photos: userData.photo,
-            },
+          version: {
+            increment: 1,
           },
         },
       });
 
-      return updatedUser;
+      return updateUser.count;
     } catch (error) {
       return null;
     }

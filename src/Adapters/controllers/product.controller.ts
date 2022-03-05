@@ -41,10 +41,10 @@ export class ProductController {
   @Put('/products/:id')
   @UseBefore(authMiddleware)
   @UseBefore(validationMiddleware(CreateProductDto, 'body', true))
-  @OpenAPI({ summary: 'Update a user' })
+  @OpenAPI({ summary: 'Update a Product' })
   async updateProduct(@Param('id') id: string, @Body() productData: CreateProductDto) {
-    const updateProduct: ProductDto = await this.productService.updateProduct(id, productData);
-    return { data: updateProduct, message: 'updated' };
+    const updateProduct: Number = await this.productService.updateProduct(id, productData);
+    return { data: updateProduct, message: 'Product Updated' };
   }
 
   @Delete('/product/:id')

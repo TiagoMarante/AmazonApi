@@ -46,15 +46,14 @@ export class ProductService implements IProductService {
     return newProduct;
   }
 
-  async updateProduct(id: string, productData: CreateProductDto): Promise<ProductDto> {
+  async updateProduct(id: string, productData: CreateProductDto): Promise<Number> {
     const findProduct: ProductDto = await this.productRepository.findProductById(id);
     if (!findProduct) throw new HttpException(409, 'No product found with this key');
 
     const newProduct = await this.productRepository.updateProduct(id, productData);
-    if (!newProduct) throw new HttpException(409, 'Error updating product');
+    if (newProduct <= 0) throw new HttpException(409, 'Error updating product');
 
-    const updateProduct: ProductDto = new ProductDto(newProduct);
-    return updateProduct;
+    return newProduct;
   }
 
   async deleteProduct(id: string): Promise<ProductDto> {

@@ -5,5 +5,5 @@ export default interface IStockRepository {
   findAllStock(): Promise<Stock[]>;
   findStockById(id: string): Promise<Stock>;
   createStock(productId: string): Promise<Stock>;
-  updateStock(id: string, stock: UpdateStockDto): Promise<Stock>;
+  updateStock(id: string, stock: UpdateStockDto): Promise<Number>;
 }

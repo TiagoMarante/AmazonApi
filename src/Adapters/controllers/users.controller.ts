@@ -45,8 +45,8 @@ export class UsersController {
   @OpenAPI({ summary: 'Update a user' })
   async updateUser(@CookieParam('Authorization') res: string, @Body() userData: CreateUserDto) {
     const userId = tokenToId(res);
-    const updateUserData: UserDto = await this.userService.updateUser(userId, userData);
-    return { data: updateUserData, message: 'updated' };
+    const userUpdated: Number = await this.userService.updateUser(userId, userData);
+    return { data: userUpdated, message: 'User Updated' };
   }
 
   @Delete('/users')

@@ -8,6 +8,7 @@ export class UserDto {
   cc: string;
   nif: string;
   imgId: string;
+  version: number;
 
   constructor(user: User) {
     this.id = user.id;
@@ -17,5 +18,6 @@ export class UserDto {
     this.cc = user.cc;
     this.nif = user.nif;
     this.imgId = user.imgId;
+    this.version = user.version;
   }
 }

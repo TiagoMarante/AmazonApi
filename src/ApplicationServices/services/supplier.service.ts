@@ -38,15 +38,14 @@ export class SupplierService implements ISupplierService {
     return newSupplier;
   }
 
-  async updateSupplier(id: string, supplierData: CreateSupplierDto): Promise<SupplierDto> {
+  async updateSupplier(id: string, supplierData: CreateSupplierDto): Promise<Number> {
     const findSupplier: SupplierDto = new SupplierDto(await this.supplierRepository.findSupplierById(id));
     if (!findSupplier) throw new HttpException(409, 'No supplier found with this key');
 
-    const newSupplier = await this.supplierRepository.updateSupplier(id, supplierData);
-    if (!newSupplier) throw new HttpException(409, 'Error updating supplier');
+    const updatedSupplier = await this.supplierRepository.updateSupplier(id, supplierData);
+    if (updatedSupplier <= 0) throw new HttpException(409, 'Error updating supplier');
 
-    const updateSupplier: SupplierDto = new SupplierDto(newSupplier);
-    return updateSupplier;
+    return updatedSupplier;
   }
 
   async deleteSupplier(id: string): Promise<SupplierDto> {

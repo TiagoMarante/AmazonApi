@@ -46,6 +46,7 @@ export class ProductRepository implements IProductRepository {
         price_acq: product.price_acq,
         price_aux: product.price_aux,
         ean: product.ean,
+        version: 0,
         img: {
           create: {
             photos: product.img,
@@ -57,15 +58,16 @@ export class ProductRepository implements IProductRepository {
     return products;
   }
 
-  async updateProduct(id: string, product: CreateProductDto): Promise<Product_Wharehouse> {
+  async updateProduct(id: string, product: CreateProductDto): Promise<Number> {
     /**
      * Update all fields of a Product
      */
 
     try {
-      const updateProduct = await prisma.product_Wharehouse.update({
+      const updateProduct = await prisma.product_Wharehouse.updateMany({
         where: {
           id: id,
+          version: product.version,
         },
         data: {
           name: product.name,
@@ -77,15 +79,13 @@ export class ProductRepository implements IProductRepository {
           price_acq: product.price_acq,
           price_aux: product.price_aux,
           ean: product.ean,
-          img: {
-            create: {
-              photos: product.img,
-            },
+          version: {
+            increment: 1,
           },
         },
       });
 
-      return updateProduct;
+      return updateProduct.count;
     } catch (error) {
       return null;
     }

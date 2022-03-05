@@ -1,5 +1,5 @@
 import { Role } from '@prisma/client';
-import { IsArray, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsEmail, IsNotEmpty, IsNumber, IsString, Min } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -25,6 +25,11 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   public photo: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Min(0)
+  public version: number;
 
   @IsArray()
   @IsNotEmpty()
