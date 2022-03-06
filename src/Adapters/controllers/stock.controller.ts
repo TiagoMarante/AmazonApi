@@ -28,6 +28,15 @@ export class StockController {
     return { data: findOneStock, message: 'findOne' };
   }
 
+
+  @Get('/stocks/product/:productId')
+  @UseBefore(authMiddleware)
+  @OpenAPI({ summary: 'Return stock about a product' })
+  async getStockByProductId(@Param('productId') productId: string) {
+    const findProductStock: StockDto = await this.stockService.findStockByProductId(productId);
+    return { data: findProductStock, message: 'findOne' };
+  }
+
   @Put('/stocks')
   @UseBefore(authMiddleware)
   @UseBefore(validationMiddleware(UpdateStockDto, 'body', true))

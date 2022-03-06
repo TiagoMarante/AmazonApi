@@ -6,6 +6,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class StockRepository implements IStockRepository {
+
   async findAllStock(): Promise<Stock[]> {
     /**
      * Find All Stocks
@@ -28,6 +29,21 @@ export class StockRepository implements IStockRepository {
     });
 
     return stock;
+  }
+
+  async findStockByProductId(productId: string): Promise<Stock> {
+    /**
+     * Find Stocks by Product Id
+     */
+    
+    const productStock = await prisma.stock.findUnique({
+      where: {
+        product_WharehouseId: productId,
+      },
+    });
+
+    return productStock;
+
   }
 
   async createStock(productId: string): Promise<Stock> {

@@ -10,6 +10,7 @@ import IStockService from '../interfaces/stock/stock_serv.interface';
 
 @injectable()
 export class StockService implements IStockService {
+  
   public stockRepository = injector.get<IStockRepository>(TYPES.IStockRepository);
 
   async findAllStock(): Promise<StockDto[]> {
@@ -24,6 +25,15 @@ export class StockService implements IStockService {
     const findStock: StockDto = new StockDto(stock);
 
     return findStock;
+  }
+
+  async findStockByProductId(productId: string): Promise<StockDto> {
+    const stock: Stock = await this.stockRepository.findStockByProductId(productId);
+    if(!stock) throw new HttpException(409, 'No stock found for that productId');
+
+    const productStock = new StockDto(stock);
+
+    return productStock;
   }
 
   async createStock(product: string): Promise<StockDto> {
