@@ -14,7 +14,7 @@ export interface TokenData {
 }
 
 export interface RequestWithUser extends Request {
-  user: LoginUserDto;
+  user: UserDto;
 }
 
 export default interface IAuthService {

@@ -24,8 +24,7 @@ export class AuthController {
   @Get('/login')
   @UseBefore(authMiddleware)
   async loggedUser(@Req() req: RequestWithUser) {
-    const userData: LoginUserDto = req.user;
-
+    const userData: UserDto = req.user;
     return { data: userData, message: 'logged' };
   }
 
