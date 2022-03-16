@@ -18,6 +18,10 @@ import ISupplierRepository from './ApplicationServices/interfaces/supplier/suppl
 import SupplierRepository from './Adapters/repositories/supplier.repository';
 import { TYPES } from './types';
 import { SupplierService } from './ApplicationServices/services/supplier.service';
+import IImageService from './ApplicationServices/interfaces/img/image_serv.interface';
+import { ImageService } from './ApplicationServices/services/img.service';
+import IImageRepository from './ApplicationServices/interfaces/img/image_repo.interface';
+import { ImageRepository } from './Adapters/repositories/img.repository';
 
 const injector = new Container();
 
@@ -34,5 +38,8 @@ injector.bind<IStockRepository>(TYPES.IStockRepository).to(StockRepository);
 
 injector.bind<ISupplierService>(TYPES.ISupplierService).to(SupplierService);
 injector.bind<ISupplierRepository>(TYPES.ISupplierRepository).to(SupplierRepository);
+
+injector.bind<IImageService>(TYPES.IImageService).to(ImageService);
+injector.bind<IImageRepository>(TYPES.IImageRepository).to(ImageRepository);
 
 export { injector };

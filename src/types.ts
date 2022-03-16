@@ -12,6 +12,11 @@ const TYPES = {
 
   ISupplierService: Symbol.for('ISupplierService'),
   ISupplierRepository: Symbol.for('ISupplierRepository'),
+
+
+  IImageService: Symbol.for('IImageService'),
+  IImageRepository: Symbol.for('IImageRepository'),
+  
 };
 
 export { TYPES };

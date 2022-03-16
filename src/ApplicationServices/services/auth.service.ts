@@ -47,7 +47,7 @@ class AuthService implements IAuthService {
     return { cookie, findUser };
   }
 
-  public async logout(userData: LoginUserDto): Promise<UserDto> {
+  public async logout(userData: UserDto): Promise<UserDto> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
     const findUser: UserDto = await this.usersRepository.findUserByEmail(userData.email);
