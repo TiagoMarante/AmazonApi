@@ -19,7 +19,7 @@ export interface RequestWithUser extends Request {
 
 export default interface IAuthService {
   login(userData: LoginUserDto): Promise<{ cookie: string; findUser: UserDto }>;
-  logout(userData: LoginUserDto): Promise<UserDto>;
+  logout(userData: UserDto): Promise<UserDto>;
   createToken(user: UserDto): TokenData;
   createCookie(tokenData: TokenData): string;
 }

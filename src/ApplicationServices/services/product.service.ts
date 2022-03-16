@@ -1,13 +1,15 @@
 import { TYPES } from '@/types';
 import { HttpException } from '@/exceptions/HttpException';
 import { injector } from '@/inversify.config';
-import { Product_Wharehouse } from '@prisma/client';
+import { Product_Wharehouse, Stock } from '@prisma/client';
 import { injectable } from 'inversify';
 import IProductService from '../interfaces/product/product_serv.interface';
 import { ProductDto } from '../dtos/Applicattion/product.dto';
 import IProductRepository from '../interfaces/product/product_repo.interface';
 import { CreateProductDto } from '../dtos/Swagger/product.dto';
 import IStockRepository from '../interfaces/stock/stock_repo.interface';
+import { ProductFrontDto } from '../dtos/Applicattion/product-front.dto';
+import { StockDto } from '../dtos/Applicattion/stock.dto';
 
 @injectable()
 export class ProductService implements IProductService {
@@ -17,6 +19,27 @@ export class ProductService implements IProductService {
   async findAllProducts(): Promise<ProductDto[]> {
     const products: Product_Wharehouse[] = await this.productRepository.findAllProducts();
     return this.listToDto(products);
+  }
+
+  async findAllProductsFront(): Promise<ProductFrontDto[]> {
+    let wait = true;
+    let productFront: ProductFrontDto[] = [];
+    const products: Product_Wharehouse[] = await this.productRepository.findAllProducts();
+
+    for (let i = 0; i < products.length; i++) {
+      const stock: Stock = await this.stockRepository.findStockByProductId(products[i].id);
+      const product : ProductFrontDto = new ProductFrontDto(products[i].id, products[i].name, products[i].imgId,stock.currentStock, stock.neededStock);
+      productFront.push(product);
+
+      if(i == products.length-1){
+        wait = false;
+      }
+    }
+
+    if(!wait){
+      return productFront;
+    }
+    
   }
 
   async findProductById(id: string): Promise<ProductDto> {

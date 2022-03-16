@@ -31,7 +31,7 @@ export class AuthController {
   @Post('/logout')
   @UseBefore(authMiddleware)
   async logOut(@Req() req: RequestWithUser, @Res() res: Response) {
-    const userData: LoginUserDto = req.user;
+    const userData = req.user;
 
     const logOutUserData: UserDto = await this.authService.logout(userData);
 

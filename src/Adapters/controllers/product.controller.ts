@@ -7,6 +7,7 @@ import { Controller, Get, UseBefore, Param, Post, HttpCode, Body, Put, Delete } 
 import { OpenAPI } from 'routing-controllers-openapi';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import { validationMiddleware } from '../middlewares/validation.middleware';
+import { ProductFrontDto } from '@/ApplicationServices/dtos/Applicattion/product-front.dto';
 
 @Controller()
 export class ProductController {
@@ -18,6 +19,15 @@ export class ProductController {
   async getProducts() {
     const findAllProducts: ProductDto[] = await this.productService.findAllProducts();
     return { data: findAllProducts, message: 'findAll' };
+  }
+
+
+  @Get('/products/frontend')
+  @UseBefore(authMiddleware)
+  @OpenAPI({ summary: 'Return a list of Products for the front-end' })
+  async getProductsFront() {
+    const findAllProductsFront: ProductFrontDto[] = await this.productService.findAllProductsFront();
+    return { data: findAllProductsFront, message: 'findAll' };
   }
 
   @Get('/products/:id')
