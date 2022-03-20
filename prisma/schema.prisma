@@ -19,48 +19,61 @@ model User {
   cc          String?
   nif         String?
   permissions Role[]
-  version     Int    
+  version     Int
   img         Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   imgId       String?
 }
 
 // Products in the system
 model Product_Wharehouse {
-  id          String     @id @default(cuid())
-  name        String     @unique
+  id          String  @id @default(cuid())
+  name        String  @unique
   grossweight Float
   netWeight   Float
   width       Float
   lenght      Float
-  hscode      String     @unique
+  hscode      String  @unique
   price_acq   Float
   price_aux   Float[]
-  ean         String     @unique
-  version     Int    
+  ean         String  @unique
+  version     Int
 
-  stock       Stock?
-  supplier    Supplier[]
+  stock Stock?
 
-  img        Img?    @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  imgId      String?
-  supplierId String?
+  img             Img?              @relation(fields: [imgId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  imgId           String?
+  supplierId      String?
+  SupplierProduct SupplierProduct[]
+}
+
+// All supliers
+model Supplier {
+  id      String @id @default(cuid())
+  nif     String
+  name    String
+  address String
+  email   String
+  version Int
+
+
+  SupplierProduct SupplierProduct[]
 }
 
 // All supliers of a product
-model Supplier {
-  id           String @id @default(cuid())
-  nif          String
-  name         String
-  address      String
-  email        String
+model SupplierProduct {
+  id       String   @id @default(cuid())
+  supplier Supplier @relation(fields: [supplierId], references: [id])
+
   quantity_box Float
   price_box    Float
   price_unit   Float
-  version     Int    
+  version      Int
+
+  product_Wharehouse Product_Wharehouse @relation(fields: [product_WharehouseId], references: [id])
 
 
-  Product_Wharehouse   Product_Wharehouse? @relation(fields: [product_WharehouseId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  product_WharehouseId String?
+  supplierId           String
+  product_WharehouseId String
 }
 
 // Stock of a product
@@ -69,7 +82,7 @@ model Stock {
   product      Product_Wharehouse @relation(fields: [product_WharehouseId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   currentStock Int
   neededStock  Int
-  version     Int    
+  version      Int
 
   product_WharehouseId String @unique
 }

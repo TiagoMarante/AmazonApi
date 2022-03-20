@@ -12,29 +12,37 @@ import { validationMiddleware } from '../middlewares/validation.middleware';
 export class SupplierController {
   public supplierService = injector.get<ISupplierService>(TYPES.ISupplierService);
 
-  @Post('/supplier/:productId')
+  @Post('/supplier')
   @UseBefore(authMiddleware)
   @UseBefore(validationMiddleware(CreateSupplierDto, 'body', true))
-  @OpenAPI({ summary: 'Create supplier for a product' })
-  async getStocks(@Param('productId') productId: string, @Body() supplierData: CreateSupplierDto) {
-    const newSupplier: SupplierDto = await this.supplierService.createSupplier(productId, supplierData);
+  @OpenAPI({ summary: 'Create supplier' })
+  async getStocks(@Body() supplierData: CreateSupplierDto) {
+    const newSupplier: SupplierDto = await this.supplierService.createSupplier(supplierData);
     return { result: newSupplier, message: 'created' };
   }
 
-  @Get('/supplier/product/:productId')
-  @UseBefore(authMiddleware)
-  @OpenAPI({ summary: 'Return information about all suppliers of a product' })
-  async getAllSuppliersOfaProduct(@Param('productId') productId: string) {
-    const findAllSuppliers: SupplierDto[] = await this.supplierService.findAllProductSuppliers(productId);
-    return { result: findAllSuppliers, message: 'findAll' };
-  }
+  // @Get('/supplier/product/:productId')
+  // @UseBefore(authMiddleware)
+  // @OpenAPI({ summary: 'Return information about all suppliers of a product' })
+  // async getAllSuppliersOfaProduct(@Param('productId') productId: string) {
+  //   const findAllSuppliers: SupplierDto[] = await this.supplierService.findAllProductOfSuppliers(productId);
+  //   return { result: findAllSuppliers, message: 'findAll' };
+  // }
 
   @Get('/supplier/:id')
   @UseBefore(authMiddleware)
   @OpenAPI({ summary: 'Return information of a Supplier' })
-  async getStockById(@Param('id') id: string) {
-    const findAllSupplier: SupplierDto = await this.supplierService.findSupplierById(id);
-    return { result: findAllSupplier, message: 'findOne' };
+  async getSupplierById(@Param('id') id: string) {
+    const findSupplierById: SupplierDto = await this.supplierService.findSupplierById(id);
+    return { result: findSupplierById, message: 'findOne' };
+  }
+
+  @Get('/supplier')
+  @UseBefore(authMiddleware)
+  @OpenAPI({ summary: 'Return information of all Suppliers' })
+  async getAllSuppliers() {
+    const findAllSuppliers: SupplierDto[] = await this.supplierService.findAllSuppliers();
+    return { result: findAllSuppliers, message: 'findOne' };
   }
 
   @Put('/supplier/:id')

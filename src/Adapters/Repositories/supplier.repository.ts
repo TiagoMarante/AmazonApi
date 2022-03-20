@@ -7,6 +7,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 export default class SupplierRepository implements ISupplierRepository {
+  
   async findSupplierById(id: string): Promise<Supplier> {
     /**
      * Find Single Supplier
@@ -21,21 +22,17 @@ export default class SupplierRepository implements ISupplierRepository {
     return supplier;
   }
 
-  async findAllProductSuppliers(productId: string): Promise<Supplier[]> {
+  async findAllSuppliers(): Promise<Supplier[]> {
     /**
-     * Find All Products Suppliers
+     * Find All Suppliers
      */
 
-    const suppliers = await prisma.supplier.findMany({
-      where: {
-        product_WharehouseId: productId,
-      },
-    });
+    const suppliers = await prisma.supplier.findMany({});
 
     return suppliers;
   }
 
-  async createSupplier(productId: string, supplierData: CreateSupplierDto): Promise<Supplier> {
+  async createSupplier(supplierData: CreateSupplierDto): Promise<Supplier> {
     /**
      * Create Supplier
      */
@@ -46,10 +43,6 @@ export default class SupplierRepository implements ISupplierRepository {
         name: supplierData.name,
         address: supplierData.address,
         email: supplierData.email,
-        quantity_box: supplierData.quantity_box,
-        price_box: supplierData.price_box,
-        price_unit: supplierData.price_unit,
-        product_WharehouseId: productId,
         version: 0,
       },
     });
@@ -73,9 +66,6 @@ export default class SupplierRepository implements ISupplierRepository {
           name: supplierData.name,
           address: supplierData.address,
           email: supplierData.email,
-          quantity_box: supplierData.quantity_box,
-          price_box: supplierData.price_box,
-          price_unit: supplierData.price_unit,
           version: {
             increment: 1,
           },

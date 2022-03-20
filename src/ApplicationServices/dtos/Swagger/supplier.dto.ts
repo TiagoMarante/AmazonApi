@@ -17,21 +17,6 @@ export class CreateSupplierDto {
   @IsNotEmpty()
   public email: string;
 
-  @IsInt()
-  @IsPositive()
-  @IsNotEmpty()
-  public quantity_box: number;
-
-  @IsNumber()
-  @IsPositive()
-  @IsNotEmpty()
-  public price_box: number;
-
-  @IsNumber()
-  @IsPositive()
-  @IsNotEmpty()
-  public price_unit: number;
-
   @IsNumber()
   @IsNotEmpty()
   @Min(0)

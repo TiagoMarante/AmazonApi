@@ -21,16 +21,26 @@ export class SupplierService implements ISupplierService {
     return findSupplier;
   }
 
-  async findAllProductSuppliers(productId: string): Promise<SupplierDto[]> {
-    const suppliers: Supplier[] = await this.supplierRepository.findAllProductSuppliers(productId);
-    return this.listToDto(suppliers);
+
+  async findAllSuppliers(): Promise<SupplierDto[]> {
+    const suppliers: Supplier[] = await this.supplierRepository.findAllSuppliers();
+
+    if (!suppliers) throw new HttpException(409, 'No suppliers found');
+    const findSupplier: SupplierDto[] = this.listToDto(suppliers);
+
+    return findSupplier;
   }
 
-  async createSupplier(productId: string, supplierData: CreateSupplierDto): Promise<SupplierDto> {
+  // async findAllProductOfSuppliers(productId: string): Promise<SupplierDto[]> {
+  //   const suppliers: Supplier[] = await this.supplierRepository.findAllProductSuppliers(productId);
+  //   return this.listToDto(suppliers);
+  // }
+
+  async createSupplier(supplierData: CreateSupplierDto): Promise<SupplierDto> {
     let newSupplier: SupplierDto;
 
     try {
-      newSupplier = new SupplierDto(await this.supplierRepository.createSupplier(productId, supplierData));
+      newSupplier = new SupplierDto(await this.supplierRepository.createSupplier(supplierData));
     } catch (error) {
       throw new HttpException(409, 'Error creating new supplier');
     }

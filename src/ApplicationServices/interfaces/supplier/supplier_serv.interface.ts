@@ -3,8 +3,9 @@ import { CreateSupplierDto } from '@/ApplicationServices/dtos/Swagger/supplier.d
 
 export default interface ISupplierService {
   findSupplierById(id: string): Promise<SupplierDto>;
-  findAllProductSuppliers(productId: string): Promise<SupplierDto[]>;
-  createSupplier(productId: string, supplierData: CreateSupplierDto): Promise<SupplierDto>;
+  findAllSuppliers(): Promise<SupplierDto[]>;
+  //findAllProductOfSuppliers(productId: string): Promise<SupplierDto[]>;
+  createSupplier(supplierData: CreateSupplierDto): Promise<SupplierDto>;
   updateSupplier(id: string, userData: CreateSupplierDto): Promise<Number>;
   deleteSupplier(id: string): Promise<SupplierDto>;
 }
