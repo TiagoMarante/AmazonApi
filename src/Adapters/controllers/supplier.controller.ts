@@ -12,13 +12,13 @@ import { validationMiddleware } from '../middlewares/validation.middleware';
 export class SupplierController {
   public supplierService = injector.get<ISupplierService>(TYPES.ISupplierService);
 
-  @Post('/stocks/:productId')
+  @Post('/supplier/:productId')
   @UseBefore(authMiddleware)
   @UseBefore(validationMiddleware(CreateSupplierDto, 'body', true))
   @OpenAPI({ summary: 'Create supplier for a product' })
   async getStocks(@Param('productId') productId: string, @Body() supplierData: CreateSupplierDto) {
     const newSupplier: SupplierDto = await this.supplierService.createSupplier(productId, supplierData);
-    return { data: newSupplier, message: 'created' };
+    return { result: newSupplier, message: 'created' };
   }
 
   @Get('/supplier/product/:productId')
@@ -26,7 +26,7 @@ export class SupplierController {
   @OpenAPI({ summary: 'Return information about all suppliers of a product' })
   async getAllSuppliersOfaProduct(@Param('productId') productId: string) {
     const findAllSuppliers: SupplierDto[] = await this.supplierService.findAllProductSuppliers(productId);
-    return { data: findAllSuppliers, message: 'findAll' };
+    return { result: findAllSuppliers, message: 'findAll' };
   }
 
   @Get('/supplier/:id')
@@ -34,7 +34,7 @@ export class SupplierController {
   @OpenAPI({ summary: 'Return information of a Supplier' })
   async getStockById(@Param('id') id: string) {
     const findAllSupplier: SupplierDto = await this.supplierService.findSupplierById(id);
-    return { data: findAllSupplier, message: 'findOne' };
+    return { result: findAllSupplier, message: 'findOne' };
   }
 
   @Put('/supplier/:id')
@@ -43,7 +43,7 @@ export class SupplierController {
   @OpenAPI({ summary: 'Update Supplier' })
   async addCurrentStock(@Param('id') id: string, @Body() supplierData: CreateSupplierDto) {
     const updatedSupplier: Number = await this.supplierService.updateSupplier(id, supplierData);
-    return { data: updatedSupplier, message: 'Supplier updated' };
+    return { result: updatedSupplier, message: 'Supplier updated' };
   }
 
   @Delete('/supplier/:id')
@@ -51,6 +51,6 @@ export class SupplierController {
   @OpenAPI({ summary: 'Return information about a product' })
   async deleteProduct(@Param('id') id: string) {
     const deleteSupplier: SupplierDto = await this.supplierService.deleteSupplier(id);
-    return { data: deleteSupplier, message: 'deleted' };
+    return { result: deleteSupplier, message: 'deleted' };
   }
 }

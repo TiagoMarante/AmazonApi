@@ -18,7 +18,7 @@ export class UsersController {
   @OpenAPI({ summary: 'Return a list of Users' })
   async getUsers() {
     const findAllUsersData: UserDto[] = await this.userService.findAllUser();
-    return { data: findAllUsersData, message: 'findAll' };
+    return { result: findAllUsersData, message: 'findAll' };
   }
 
   @Get('/users/:id')
@@ -26,7 +26,7 @@ export class UsersController {
   @OpenAPI({ summary: 'Return find a user' })
   async getUserById(@Param('id') userId: string) {
     const findOneUserData: UserDto = await this.userService.findUserById(userId);
-    return { data: findOneUserData, message: 'findOne' };
+    return { result: findOneUserData, message: 'findOne' };
   }
 
   @Post('/users')
@@ -36,7 +36,7 @@ export class UsersController {
   @OpenAPI({ summary: 'Create a new user' })
   async createUser(@Body() userData: CreateUserDto) {
     const createUserData: UserDto = await this.userService.createUser(userData);
-    return { data: createUserData, message: 'created' };
+    return { result: createUserData, message: 'created' };
   }
 
   @Put('/users')
@@ -46,7 +46,7 @@ export class UsersController {
   async updateUser(@CookieParam('Authorization') res: string, @Body() userData: CreateUserDto) {
     const userId = tokenToId(res);
     const userUpdated: Number = await this.userService.updateUser(userId, userData);
-    return { data: userUpdated, message: 'User Updated' };
+    return { result: userUpdated, message: 'User Updated' };
   }
 
   @Delete('/users')
@@ -56,6 +56,6 @@ export class UsersController {
     const userId = tokenToId(res);
 
     const deleteUserData: UserDto = await this.userService.deleteUser(userId);
-    return { data: deleteUserData, message: 'deleted' };
+    return { result: deleteUserData, message: 'deleted' };
   }
 }

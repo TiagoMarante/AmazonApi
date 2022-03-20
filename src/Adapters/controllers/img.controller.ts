@@ -17,14 +17,14 @@ export class ImgController {
   @UseBefore(authMiddleware)
   async getAllImages() {
     const imgs: ImgDto[] = await this.imageService.findAllImages();
-    return { data: imgs, message: 'findAll' };
+    return { result: imgs, message: 'findAll' };
   }
 
   @Get('/img:id')
   @UseBefore(authMiddleware)
   async getImagesById(@Param('id') id: string) {
     const imgData: ImgDto = await this.imageService.findImageById(id);
-    return { data: imgData, message: 'findById' };
+    return { result: imgData, message: 'findById' };
   }
 
 
@@ -33,7 +33,7 @@ export class ImgController {
   @UseBefore(validationMiddleware(ImageDto, 'body', true))
   async updateImages(@Body() imgData: ImageDto) {
     const updatedImg: ImgDto = await this.imageService.updateImages(imgData);
-    return { data: updatedImg, message: 'updatedImg' };
+    return { result: updatedImg, message: 'updatedImg' };
   }
 
 }

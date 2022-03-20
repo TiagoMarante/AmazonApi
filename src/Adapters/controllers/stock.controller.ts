@@ -17,7 +17,7 @@ export class StockController {
   @OpenAPI({ summary: 'Return a list of product Stocks' })
   async getStocks() {
     const findAllStocks: StockDto[] = await this.stockService.findAllStock();
-    return { data: findAllStocks, message: 'findAll' };
+    return { result: findAllStocks, message: 'findAll' };
   }
 
   @Get('/stocks/:id')
@@ -25,7 +25,7 @@ export class StockController {
   @OpenAPI({ summary: 'Return information about a product stock' })
   async getStockById(@Param('id') id: string) {
     const findOneStock: StockDto = await this.stockService.findStockById(id);
-    return { data: findOneStock, message: 'findOne' };
+    return { result: findOneStock, message: 'findOne' };
   }
 
 
@@ -34,7 +34,7 @@ export class StockController {
   @OpenAPI({ summary: 'Return stock about a product' })
   async getStockByProductId(@Param('productId') productId: string) {
     const findProductStock: StockDto = await this.stockService.findStockByProductId(productId);
-    return { data: findProductStock, message: 'findOne' };
+    return { result: findProductStock, message: 'findOne' };
   }
 
   @Put('/stocks')
@@ -43,6 +43,6 @@ export class StockController {
   @OpenAPI({ summary: 'Add products to stock' })
   async addCurrentStock(@Body() stockData: UpdateStockDto) {
     const updatedStock: Number = await this.stockService.updateStock(stockData);
-    return { data: updatedStock, message: 'Stock Updated' };
+    return { result: updatedStock, message: 'Stock Updated' };
   }
 }
