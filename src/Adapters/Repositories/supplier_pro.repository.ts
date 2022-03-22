@@ -8,13 +8,35 @@ import { injectable } from 'inversify';
 @injectable()
 export default class SupplierProductRepository implements ISupplierProductRepository {
 
-  
+
+
   findSupplierProductById(id: string): Promise<SupplierProduct> {
     throw new Error('Method not implemented.');
   }
-  findAllSupplierProducts(): Promise<SupplierProduct[]> {
-    throw new Error('Method not implemented.');
+
+  async findAllSupplierProducts(supplierId: string): Promise<SupplierProduct[]> {
+    /**
+     * Get all products of a Supplier
+     */
+
+    const productsFromSupplier = await prisma.supplierProduct.findMany({
+      where: {
+        supplierId: supplierId
+      }
+    });
+
+    return productsFromSupplier;
   }
+
+  async findAllSupplierInfo(): Promise<SupplierProduct[]> {
+    /**
+     * Find all of a Supplier
+     */
+
+    const productsFromSupplier = await prisma.supplierProduct.findMany({});
+    return productsFromSupplier;
+  }
+
 
   async createSupplierProduct(supplierData: CreateSupplierProductDto): Promise<SupplierProduct> {
     /**
@@ -22,7 +44,7 @@ export default class SupplierProductRepository implements ISupplierProductReposi
      */
 
     const supplierProduct = await prisma.supplierProduct.create({
-      data:{
+      data: {
         quantity_box: supplierData.quantity_box,
         price_box: supplierData.price_box,
         price_unit: supplierData.price_unit,
@@ -34,13 +56,49 @@ export default class SupplierProductRepository implements ISupplierProductReposi
 
     return supplierProduct;
   }
-  updateSupplierProduct(id: string, supplierData: CreateSupplierProductDto): Promise<Number> {
-    throw new Error('Method not implemented.');
+
+
+  async updateSupplierProduct(productId: string, supplierData: CreateSupplierProductDto): Promise<Number> {
+    /**
+     * Update product of a Supplier
+     */
+
+    try {
+      const updatedProduct = await prisma.supplierProduct.updateMany({
+        where: {
+          product_WharehouseId: productId
+        },
+        data: {
+          quantity_box: supplierData.quantity_box,
+          price_box: supplierData.price_box,
+          price_unit: supplierData.price_unit,
+          version: {
+            increment: 1,
+          }
+        }
+      })
+      return updatedProduct.count;
+    } catch (error) {
+      return null;
+    }
+
   }
 
-  deleteSupplierProduct(id: string): Promise<SupplierProduct> {
-    throw new Error('Method not implemented.');
+  async deleteSupplierProduct(productId: string): Promise<Number> {
+    /**
+     * Delete product of a Supplier
+     */
+    try {
+      const updatedProduct = await prisma.supplierProduct.deleteMany({
+        where: {
+          product_WharehouseId: productId
+        }
+      })
+      return updatedProduct.count;
+    } catch (error) {
+      return null;
+    }
   }
-  
-  
+
+
 }

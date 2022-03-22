@@ -6,6 +6,7 @@ import { SupplierProductDto } from '../dtos/Applicattion/supplier_pro.dto';
 import { CreateSupplierProductDto } from '../dtos/Swagger/supplier_pro.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import ISupplierProductRepository from '../interfaces/supplier_product/supplier_pro_repo.interface';
+import { ProductDto } from '../dtos/Applicattion/product.dto';
 
 @injectable()
 export class SupplierProductService implements ISupplierProductService {
@@ -14,8 +15,29 @@ export class SupplierProductService implements ISupplierProductService {
   findSupplierProductById(id: string): Promise<SupplierProductDto> {
     throw new Error('Method not implemented.');
   }
-  findAllSupplierProducts(): Promise<SupplierProductDto[]> {
-    throw new Error('Method not implemented.');
+
+  async findAllSupplierProducts(supplierId: string): Promise<SupplierProductDto[]> {
+    let suppliersProducts: SupplierProductDto[];
+
+    try {
+      suppliersProducts = await this.supplierProductRepository.findAllSupplierProducts(supplierId);
+    } catch (error) {
+      throw new HttpException(409, 'Error getting data of a supplier');
+    }
+
+    return suppliersProducts;
+  }
+
+  async findAllSupplierInfo(): Promise<SupplierProductDto[]> {
+    let suppliersProducts: SupplierProductDto[];
+
+    try {
+      suppliersProducts = await this.supplierProductRepository.findAllSupplierInfo();
+    } catch (error) {
+      throw new HttpException(409, 'Error finding all');
+    }
+
+    return suppliersProducts;
   }
 
   async createSupplierProduct(supplierData: CreateSupplierProductDto): Promise<SupplierProductDto> {
@@ -30,12 +52,20 @@ export class SupplierProductService implements ISupplierProductService {
 
     return newSupplierProduct;
   }
-  updateSupplierProduct(id: string, supplierData: CreateSupplierProductDto): Promise<Number> {
-    throw new Error('Method not implemented.');
+
+  async updateSupplierProduct(productId: string, supplierData: CreateSupplierProductDto): Promise<Number> {
+    const newSupplierProduct = await this.supplierProductRepository.updateSupplierProduct(productId, supplierData);
+    if (newSupplierProduct <= 0) throw new HttpException(409, 'Error while updating product of a supplier');
+    
+
+    return newSupplierProduct;
   }
   
-  deleteSupplierProduct(id: string): Promise<SupplierProductDto> {
-    throw new Error('Method not implemented.');
+  async deleteSupplierProduct(productId: string): Promise<Number> {
+    const deleteSupplier = await this.supplierProductRepository.deleteSupplierProduct(productId);
+    if (deleteSupplier <= 0) throw new HttpException(409, 'Error while deleting product of a supplier');
+    
+    return deleteSupplier;
   }
 
   

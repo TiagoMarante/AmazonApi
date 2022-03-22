@@ -3,8 +3,9 @@ import { SupplierProduct } from '@prisma/client';
 
 export default interface ISupplierProductRepository {
   findSupplierProductById(id: string): Promise<SupplierProduct>;
-  findAllSupplierProducts(): Promise<SupplierProduct[]>;
+  findAllSupplierProducts(supplierId: string): Promise<SupplierProduct[]>;
+  findAllSupplierInfo(): Promise<SupplierProduct[]>;
   createSupplierProduct(supplierData: CreateSupplierProductDto): Promise<SupplierProduct>;
-  updateSupplierProduct(id: string, supplierData: CreateSupplierProductDto): Promise<Number>;
-  deleteSupplierProduct(id: string): Promise<SupplierProduct>;
+  updateSupplierProduct(productId: string, supplierData: CreateSupplierProductDto): Promise<Number>;
+  deleteSupplierProduct(productId: string): Promise<Number>;
 }
