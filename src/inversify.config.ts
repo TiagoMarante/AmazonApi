@@ -22,6 +22,10 @@ import IImageService from './ApplicationServices/interfaces/img/image_serv.inter
 import { ImageService } from './ApplicationServices/services/img.service';
 import IImageRepository from './ApplicationServices/interfaces/img/image_repo.interface';
 import { ImageRepository } from './Adapters/repositories/img.repository';
+import ISupplierProductService from './ApplicationServices/interfaces/supplier_product/supplier_pro_serv.interface';
+import ISupplierProductRepository from './ApplicationServices/interfaces/supplier_product/supplier_pro_repo.interface';
+import SupplierProductRepository from './Adapters/repositories/supplier_pro.repository';
+import { SupplierProductService } from './ApplicationServices/services/supplier_pro.service';
 
 const injector = new Container();
 
@@ -38,6 +42,9 @@ injector.bind<IStockRepository>(TYPES.IStockRepository).to(StockRepository);
 
 injector.bind<ISupplierService>(TYPES.ISupplierService).to(SupplierService);
 injector.bind<ISupplierRepository>(TYPES.ISupplierRepository).to(SupplierRepository);
+
+injector.bind<ISupplierProductService>(TYPES.ISupplierProductService).to(SupplierProductService);
+injector.bind<ISupplierProductRepository>(TYPES.ISupplierProductRepository).to(SupplierProductRepository);
 
 injector.bind<IImageService>(TYPES.IImageService).to(ImageService);
 injector.bind<IImageRepository>(TYPES.IImageRepository).to(ImageRepository);

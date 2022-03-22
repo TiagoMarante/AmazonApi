@@ -14,6 +14,10 @@ const TYPES = {
   ISupplierRepository: Symbol.for('ISupplierRepository'),
 
 
+  ISupplierProductService: Symbol.for('ISupplierProductService'),
+  ISupplierProductRepository: Symbol.for('ISupplierProductRepository'),
+
+
   IImageService: Symbol.for('IImageService'),
   IImageRepository: Symbol.for('IImageRepository'),
   

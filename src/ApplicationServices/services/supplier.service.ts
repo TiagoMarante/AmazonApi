@@ -31,11 +31,6 @@ export class SupplierService implements ISupplierService {
     return findSupplier;
   }
 
-  // async findAllProductOfSuppliers(productId: string): Promise<SupplierDto[]> {
-  //   const suppliers: Supplier[] = await this.supplierRepository.findAllProductSuppliers(productId);
-  //   return this.listToDto(suppliers);
-  // }
-
   async createSupplier(supplierData: CreateSupplierDto): Promise<SupplierDto> {
     let newSupplier: SupplierDto;
 

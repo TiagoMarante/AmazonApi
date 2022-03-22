@@ -11,8 +11,11 @@ import { ProductController } from './Adapters/controllers/product.controller';
 import { StockController } from './Adapters/controllers/stock.controller';
 import { SupplierController } from './Adapters/controllers/supplier.controller';
 import { ImgController } from './Adapters/controllers/img.controller';
+import { SupplierProductController } from './Adapters/controllers/supplierPro.controller';
 
 validateEnv();
 
-const app = new App([AuthController, IndexController, UsersController, ProductController, StockController, SupplierController, ImgController]);
+const app = new App([AuthController, IndexController,
+     UsersController, ProductController, StockController,
+      SupplierController, SupplierProductController, ImgController]);
 app.listen();
