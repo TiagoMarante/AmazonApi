@@ -26,11 +26,16 @@ export class ProductService implements IProductService {
     let wait = true;
     let productFront: ProductFrontDto[] = [];
     const products: Product_Wharehouse[] = await this.productRepository.findAllProducts();
+    
 
     for (let i = 0; i < products.length; i++) {
       const stock: Stock = await this.stockRepository.findStockByProductId(products[i].id);
-      const images: Img = await this.imageRepository.findImageById(products[0].imgId);
+      
+      const images: Img = await this.imageRepository.findImageById(products[i].imgId);
       const product : ProductFrontDto = new ProductFrontDto(products[i].id, products[i].name, images.photos,stock.currentStock, stock.neededStock);
+      console.log(product);
+      
+
       productFront.push(product);
 
       if(i == products.length-1){
